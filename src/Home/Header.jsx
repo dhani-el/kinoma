@@ -1,5 +1,5 @@
 
-import { MenuOutlined,SearchOutlined, FacebookOutlined, TwitterOutlined, InstagramFilled } from "@ant-design/icons"
+import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons"
 import { useState } from "react"
 
 
@@ -10,7 +10,7 @@ const listOfLinks = [{id:1,name:"MOVIES",link:""},
                      {id:4,name: "CORPORATE",link:""}
                     ]
 const listOfSocials = [
-                        {id:0, icon:FacebookOutlined,link:""},
+                        {id:0, icon:FacebookFilled,link:""},
                         {id:1, icon:TwitterOutlined,link:""},
                         {id:2, icon:InstagramFilled,link:""},
 ]
@@ -25,7 +25,7 @@ function Header(){
                     <MenuTrigger/>
                 </div>
 
-                <div className="block landscape:flex justify-start gap-6 w-full pt-4 landscape:pt-0 landscape:w-[25%]">
+                <div className="block landscape:flex items-center justify-start gap-6 w-full pt-4 landscape:pt-0 landscape:w-[25%]">
                     <SearchTrigger/>
                     <div className="hidden landscape:block">
                         <ThemeControls/>
@@ -38,14 +38,14 @@ function Header(){
 }
 
 function Logo(){
-    return <p>KINOMA</p>
+    return <p className="font-barbaropt landscape:text-4xl font-bold " >KINOMA</p>
 }
 
 function NavList({list = listOfLinks}){
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p key={aLinksObj.id} >{aLinksObj.name}</p>
+                        return <p key={aLinksObj.id} className="font-montserrat font-semibold text-xs" >{aLinksObj.name}</p>
                     })
                 }
             </div>
@@ -64,7 +64,7 @@ function SearchTrigger(){
 }
 function ThemeControls(){
     const [toNightMode,settoNightMode] = useState(true)
-    return <div className="flex gap-1" >
+    return <div className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center " >
                 <span><p className="text-slate-500">NIGHT MODE </p></span>
                 <span>  <p>{toNightMode?" ON":" OFF"}</p>    </span>
             </div>

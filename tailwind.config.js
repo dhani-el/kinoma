@@ -11,7 +11,7 @@ export default {
       'monetizer':["monetizer"],
       'bebas':["bebas"],
       'barbaro':["barbaro"],
-      'barbaropt':["barbaro pt"],
+      'barbaropt':["barbaropt"],
     }
   },
   plugins: [],

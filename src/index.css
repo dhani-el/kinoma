@@ -22,8 +22,8 @@ body,html,#root{
     src: url(./Assets/fonts/barbaro.ttf);
 }
 @font-face {
-    font-family: 'barbaro pt';
-    src: url(./Assets/fonts/barbaro\ punta.ttf);
+    font-family: 'barbaropt';
+    src: url(./Assets/fonts/barbaropunta.ttf);
 }
 @font-face {
     font-family: 'bebas';
