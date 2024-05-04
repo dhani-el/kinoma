@@ -1,8 +1,8 @@
-
+import "./index.css"
 import Home from "./Home"
 
 function App() {
-  return <div>
+  return <div className="w-screen">
             <Home/>
          </div>
 }

@@ -16,8 +16,8 @@ const listOfSocials = [
 ]
 
 function Header(){
-    return <div className="flex flex-col landscape:flex-row w-full text-white justify-between">
-                <div className="flex w-full landscape:w-[60%] justify-between">
+    return <div className=" px-6 flex flex-col landscape:flex-row w-full z-10 relative text-white justify-between">
+                <div className="flex w-full landscape:w-[60%] items-center justify-between">
                     <Logo/>
                     <div className="hidden landscape:block">
                         <NavList/>
