@@ -58,7 +58,7 @@ function Left({awards,nominations}){
 }
 
 function Right({title,description,currentID,timestamp,thumbnail,amount}){
-    return <div className="w-full">
+    return <div className="w-full font">
                 <div className="w-full leading-10 text-ellipsis text-justify overflow-hidden ">
                     <p className="text-3xl">{title}</p>
                 </div>

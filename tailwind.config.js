@@ -6,6 +6,13 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily:{
+      'montserrat':["montserrat"],
+      'monetizer':["monetizer"],
+      'bebas':["bebas"],
+      'barbaro':["barbaro"],
+      'barbaropt':["barbaro pt"],
+    }
   },
   plugins: [],
 }
