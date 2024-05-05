@@ -38,14 +38,14 @@ function Header(){
 }
 
 function Logo(){
-    return <p className="font-barbaropt landscape:text-4xl font-bold " >KINOMA</p>
+    return <p className="font-barbaropt landscape:text-4xl font-bold hover:cursor-default " >KINOMA</p>
 }
 
 function NavList({list = listOfLinks}){
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p key={aLinksObj.id} className="font-montserrat font-semibold text-xs" >{aLinksObj.name}</p>
+                        return <p key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
                     })
                 }
             </div>
