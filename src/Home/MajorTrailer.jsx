@@ -58,12 +58,12 @@ function Left({awards,nominations}){
 }
 
 function Right({title,description,currentID,timestamp,thumbnail,amount}){
-    return <div className="w-full font">
-                <div className="w-[90%] max-h-[18vh] overflow-hidden">
-                    <p className="w-full h-full text-5xl overflow-hidden font-bebas text-ellipsis text-wrap break-words  text-left">{title}</p>
+    return <div className="w-full flex flex-col gap-6">
+                <div className="w-[90%] overflow-hidden">
+                    <p className="w-full max-h-[6rem] text-5xl overflow-hidden font-bebas text-ellipsis text-wrap break-words  text-left">{title}</p>
                 </div>
                 <div className="w-full  flex-col">
-                <p className="w-[90%] max-h-[25vh] overflow-hidden text-ellipsis font-montserrat text-[0.8rem] font-medium">{description} </p>
+                <p className="w-[90%] max-h-[6.125rem] text-sm overflow-hidden text-ellipsis  font-montserrat font-medium">{description} </p>
                 <p className="w-[90%] text-end">{currentID}</p>
                 </div>
                 <TrailerNIndicator timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
@@ -98,13 +98,13 @@ function Indicator({amount}){
 
         return ray
     }
-    return <div className="flex flex-col items-center justify-end w-12 border-t-[0.06rem] pt-2 border-blue-500">
-                <div className="flex flex-col gap-1 self-end">
+    return <div className="flex flex-col items-end justify-end w-12 border-t-[0.06rem] pt-2 border-blue-500">
+                <div className="flex flex-col gap-1">
                     {arraylize(amount).map(function(){
                         return <span className="block w-2 h-2 rounded-2xl bg-white"></span>
                     })}
                 </div>
-                <div className="flex">
+                <div className="flex text-sm">
                     <ArrowLeftOutlined/>
                     <ArrowRightOutlined/>
                 </div>
