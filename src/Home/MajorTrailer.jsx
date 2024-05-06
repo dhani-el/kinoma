@@ -1,6 +1,6 @@
 
 import ADimage from "../Assets/Images/test.jpg";
-import { ArrowLeftOutlined, ArrowRightOutlined, PlayCircleTwoTone, LineOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, LineOutlined, CaretRightFilled } from "@ant-design/icons";
 
 
 function MajorTrailer(){
@@ -78,7 +78,9 @@ function TrailerNIndicator({timestamp,thumbnail,amount}){
                         <img src={thumbnail} className="w-100%" />
                     </div>
                     <div className="flex items-center gap-[2rem]">
-                        <PlayCircleTwoTone className="text-3xl "/>
+                        {/* <div className= " flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full border-[0.2rem] border-blue-500"> */}
+                            <CaretRightFilled className="text-xl p-1 text-white rounded-full border-[0.2rem] border-blue-500 "/>
+                        {/* </div> */}
                         <div>
                             <p className="text-xs font-bebas">WATCH TRAILER</p>
                             <p>{timestamp}</p>
