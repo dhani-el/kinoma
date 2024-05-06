@@ -8,7 +8,7 @@ const listOfSocials = [
 ]
 
 function Footer(){
-    return <div className="w-full flex justify-between border-[1rem] p-12 border-y-0 border-blue-500 bg-white hover:cursor-default ">
+    return <div className="w-full flex justify-between border-[1rem] p-12 border-y-0 border-blue-500 bg-white hover:cursor-default mt-12 ">
                 <FooterLogo/>
                 <FooterList Head={"Coporate"} List={["News","About","Contact","Careers",]}/>
                 <FooterList Head={"Sitemap"} List={["News","About","Contact","Careers",]}/>

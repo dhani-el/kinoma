@@ -104,7 +104,7 @@ const sampleMovie = [
                     ]
 
 function Movies(){
-    return <div className=" p-12 grid grid-cols-5 relative text-white gap-8 justify-center">
+    return <div className=" p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
                 <StartText/>
                 <Variantii movieData={sampleMovie}/>
             </div>

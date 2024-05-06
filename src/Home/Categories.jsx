@@ -11,7 +11,7 @@ const categorys = [
 
 
 function Categories({categories = categorys}){
-    return <div className="relative mt-7 flex w-full left-[30%] gap-[5%]" >  
+    return <div className="relative mt-2 flex w-full left-[30%] gap-[5%]" >  
                 {
                     categories.map(function(oneCategory){
                         return <p  className="text-slate-500 text-lg font-bebas hover:cursor-default  hover:text-white hover:underline decoration-blue-500" >{oneCategory.name}</p>
