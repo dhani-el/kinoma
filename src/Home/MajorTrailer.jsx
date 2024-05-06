@@ -1,10 +1,10 @@
 
 import ADimage from "../Assets/Images/test.jpg";
-import { ArrowLeftOutlined, ArrowRightOutlined, PlayCircleTwoTone } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, PlayCircleTwoTone, LineOutlined } from "@ant-design/icons";
 
 
 function MajorTrailer(){
-    return <div className="w-full absolute top-0 left-0 z-0">
+    return <div className="w-full ">
                 <Imagee metaImage={[{image:ADimage,awards:15,nominations:32,title:"LIONSGATE MOVIES and things yeahof all tmime and space buga buga buga buga",description:"person wey no mind wheni land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?  land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?",currentID:2,timestamp:"3:40",amount:7,thumbnail:ADimage}
                     ,{image:ADimage,awards:7,nominations:12}]}/>
             </div>
@@ -47,9 +47,10 @@ function Left({awards,nominations}){
                     <p className="font-bebas text-7xl">{awards}</p>
                     <p className="font-montserrat text-[0.6rem] font-bold">Academy Awards</p>
                 </div>
-                <p className="text-7xl">
-                    -
-                </p>
+                {/* <p className="text-8xl self-start font-montserrat flex items-start align-text-top ">
+                    __
+                </p> */}
+                <LineOutlined  className="text-6xl self-start font-montserrat flex items-start "/>
                 <div className="flex flex-col items-center">
                     <p className="font-bebas text-7xl">{nominations}</p>
                     <p className="text-center font-montserrat text-[0.6rem] font-bold">Academy Award Nominations</p>
