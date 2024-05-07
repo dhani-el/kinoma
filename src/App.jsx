@@ -1,9 +1,11 @@
 import "./index.css"
-import Home from "./Home"
+import Home from "./Home";
+import SingleMovie from "./Single";
 
 function App() {
   return <div className="w-screen">
-            <Home/>
+            {/* <Home/> */}
+            <SingleMovie/>
          </div>
 }
 

@@ -78,9 +78,7 @@ function TrailerNIndicator({timestamp,thumbnail,amount}){
                         <img src={thumbnail} className="w-100%" />
                     </div>
                     <div className="flex items-center gap-[2rem]">
-                        {/* <div className= " flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full border-[0.2rem] border-blue-500"> */}
                             <CaretRightFilled className="text-xl p-1 text-white rounded-full border-[0.2rem] border-blue-500 "/>
-                        {/* </div> */}
                         <div>
                             <p className="text-xs font-bebas">WATCH TRAILER</p>
                             <p>{timestamp}</p>
