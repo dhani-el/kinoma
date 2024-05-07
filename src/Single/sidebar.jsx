@@ -33,7 +33,7 @@ function Navigation({listoNavigation = []}){
 
 function ANavItem({text,Icon, isSelected}){
     return <div className={` ${isSelected && "bg-blue-300 border-r-blue-800 border-r-[0.2rem]  border-solid"} text-2xl font-barbaro  py-6 flex items-center  justify-center hover:cursor-default`}>
-                    <div className="flex gap-3 justify-start min-w-[40%]">
+                    <div className="flex gap-3 justify-start items-center min-w-[40%]">
                         <Icon />
                         <p className="text-base">{text}</p>
                     </div>
