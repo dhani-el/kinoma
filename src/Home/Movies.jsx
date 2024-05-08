@@ -1,6 +1,7 @@
-
+import { useEffect, useState } from "react";
 import { StarFilled, HeartFilled } from "@ant-design/icons";
 import smple from "../Assets/Images/sample.jpg";
+import Paginator from "./Pagination";
 
 const sampleMovie = [
                         {
@@ -104,9 +105,23 @@ const sampleMovie = [
                     ]
 
 function Movies(){
-    return <div className=" p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
-                <StartText/>
-                <Variantii movieData={sampleMovie}/>
+    const [page,setPage] = useState(1);
+    const [mainData, setMainData] = useState([])
+    useEffect(function(){
+
+        fetch(`https://api.themoviedb.org/3/trending/movie/week?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        .then(response => response.json())
+        .then(response => {setMainData(init=>response); return response})
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+    },[page])
+
+    return <div className=" w-full">
+                <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
+                    <StartText/>
+                    <Variantii movieData={mainData.results}/>
+                </div>
+                <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
             </div>
 }
 
@@ -122,7 +137,7 @@ function Varianti({movieData=[]}){
 function Variantii({movieData=[]}){
     return <>
                 {movieData.map(function(singleData){
-                    return <Amovie img={singleData.img} title={singleData.title} status={singleData.status} rating={singleData.rating} year={singleData.year} />
+                    return <Amovie img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={singleData.title} status={singleData.status} rating={Math.floor(singleData.vote_average)} year={new Date(singleData.release_date).getFullYear()} />
                 })}
             </>
 }

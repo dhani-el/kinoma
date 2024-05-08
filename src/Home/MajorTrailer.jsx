@@ -1,22 +1,35 @@
 
+import { useEffect, useState } from "react";
 import ADimage from "../Assets/Images/test.jpg";
 import { ArrowLeftOutlined, ArrowRightOutlined, LineOutlined, CaretRightFilled } from "@ant-design/icons";
 
 
 function MajorTrailer(){
+    const [mainData, setMainData] = useState([])
+    useEffect(function(){
+
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        .then(response => response.json())
+        .then(response => {setMainData(init=>response); return response})
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+    },[])
     return <div className="w-full ">
-                <Imagee metaImage={[{image:ADimage,awards:15,nominations:32,title:"LIONSGATE MOVIES",description:"person wey no mind wheni land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?  land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?",currentID:2,timestamp:"3:40",amount:7,thumbnail:ADimage}
-                    ,{image:ADimage,awards:7,nominations:12}]}/>
+                {/* <Imagee metaImage={[{image:ADimage,awards:15,nominations:32,title:"LIONSGATE MOVIES",description:"person wey no mind wheni land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?  land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?",currentID:2,timestamp:"3:40",amount:7,thumbnail:ADimage} */}
+                <Imagee metaImage={mainData.results}/>
             </div>
 }
 
 function Imagee({metaImage=[]}){
-    return <div className="w-full h-[85vh] overflow-hidden">
+    return <div className="w-full h-[85vh] overflow-hidden relative">
+                <div className="w-full h-full absolute top-0 left-0 bg-black opacity-45">
+
+                </div>
                 <div className="h-full flex w-max">
                     {
                         metaImage.map(function(singleImage){
-                            return <AnImage ADimage={singleImage.image} awards={singleImage.awards} nominations={singleImage.nominations}
-                            title={singleImage.title} description={singleImage.description} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={singleImage.thumbnail} amount={singleImage.amount} />
+                            return <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={singleImage.vote_average} nominations={singleImage.vote_count}
+                            title={singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={singleImage.thumbnail} amount={singleImage.amount} />
                         })
                     }
                 </div>
@@ -25,7 +38,7 @@ function Imagee({metaImage=[]}){
 
 function AnImage({ADimage,awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
     return <div className="w-screen flex items-center overflow-hidden">
-                <img src={ADimage} className="w-full h-auto" />
+                <img src={ADimage} className="max-w-full h-auto object-contain" />
                 <MetaDetails awards={awards} nominations={nominations} title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
             </div>
 }
@@ -45,7 +58,7 @@ function Left({awards,nominations}){
     return <div className="w-full h-full justify-between items-center flex landscape:flex-col">
                 <div className="flex flex-col items-center">
                     <p className="font-bebas text-7xl">{awards}</p>
-                    <p className="font-montserrat text-[0.6rem] font-bold">Academy Awards</p>
+                    <p className="font-montserrat text-[0.6rem] font-bold">Rating</p>
                 </div>
                 {/* <p className="text-8xl self-start font-montserrat flex items-start align-text-top ">
                     __
@@ -53,7 +66,7 @@ function Left({awards,nominations}){
                 <LineOutlined  className="text-6xl self-start font-montserrat flex items-start "/>
                 <div className="flex flex-col items-center">
                     <p className="font-bebas text-7xl">{nominations}</p>
-                    <p className="text-center font-montserrat text-[0.6rem] font-bold">Academy Award Nominations</p>
+                    <p className="text-center font-montserrat text-[0.6rem] font-bold">Voters</p>
                 </div>
     </div>
 }

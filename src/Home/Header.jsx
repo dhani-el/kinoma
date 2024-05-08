@@ -1,3 +1,4 @@
+// import {dotenv}
 
 import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons"
 import { useState } from "react"
@@ -42,10 +43,11 @@ function Logo(){
 }
 
 function NavList({list = listOfLinks}){
+
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
+                        return <p  key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
                     })
                 }
             </div>

@@ -8,7 +8,7 @@ function MainContent(){
     return <div className="w-[80%] h-screen pt-4 px-4 overflow-hidden">
                     <VideoComponent/>
                     <MainInfoComponent/>
-                    <div className="pl-8 h-[45%] justify-between overflow-y-scroll flex">
+                    <div className="pl-8 h-[40%] justify-between overflow-y-scroll flex">
                         <ExtraInfoComponent/>
                         <ComplimentaryInfo/>
                     </div>
@@ -48,17 +48,17 @@ function Rating(){
 }
 
 function ExtraInfoComponent(){
-    return <div className="w-[70%] text-sm font-montserrat font-medium">
+    return <div className="w-[70%] text-sm font-montserrat font-medium flex flex-col justify-between">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab architecto eum, ducimus, aliquid iusto illum neque magni ipsum maxime amet dignissimos totam doloremque. Odit velit quas error explicabo at itaque quibusdam mollitia eligendi dolorum quia? Commodi debitis quibusdam quaerat voluptate suscipit explicabo totam possimus error.</p>
-                <p className="mt-6">Director: <span className="text-blue-500">Joseph Kasinski</span></p>
-                <p className="mt-2">Writer: <span className="text-blue-500">Jim Kash,Jack Epps,Peter Craig</span></p>
-                <p className="mt-2">Stars: <span className="text-blue-500">Tom Cruise, Jennifer Connelly,Miles Teller</span></p>
+                <p className="">Director: <span className="text-blue-500">Joseph Kasinski</span></p>
+                <p className="">Writer: <span className="text-blue-500">Jim Kash,Jack Epps,Peter Craig</span></p>
+                <p className="">Stars: <span className="text-blue-500">Tom Cruise, Jennifer Connelly,Miles Teller</span></p>
                 <Accolades/>
             </div>
 }
 
 function ComplimentaryInfo(){
-    return <div className="w-[26%] px-2 flex flex-col items-center">
+    return <div className="w-[26%] h-[90%] px-2 flex flex-col justify-between items-center">
                 <Showtimes/>
                 <MoreWatch/>
                 <Recommendations/>
@@ -71,14 +71,14 @@ function Showtimes(){
             </div>
 }
 function MoreWatch(){
-    return <div className="flex w-full bg-blue-300 border-blue-800 border-[0.1rem] text-black mt-2 items-center justify-center gap-4 font-bold p-2 rounded-md">
+    return <div className="flex w-full bg-blue-300 border-blue-800 border-[0.1rem] text-black items-center justify-center gap-4 font-bold p-2 rounded-md">
               <MenuOutlined />  <p>More Watch Options</p>
             </div>
 }
 
 
 function Recommendations({srcs = [Sample,Sample,Sample]}){
-    return <div className="w-full h-full relative mt-2 ">
+    return <div className="w-full relative ">
                 <div className="grid grid-cols-3 w-full relative gap-x-[0.15rem] ">
                     <img className=" rounded-tl-md" src={srcs[0]}/>
                     <img src={srcs[1]}/>
@@ -89,8 +89,8 @@ function Recommendations({srcs = [Sample,Sample,Sample]}){
 }
 
 function Accolades(){
-    return <div className=" relative flex w-full border-[0.05rem] border-black mt-1 rounded-md items-center gap-1">
-                <p className="h-[105%] border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rated Movies #64</p>
+    return <div className=" relative flex w-full border-[0.05rem] border-black  rounded-md items-center gap-1">
+                <p className=" border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rated Movies #64</p>
                 <p>Awards 9 nominations</p>
             </div>
 }

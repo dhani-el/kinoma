@@ -4,8 +4,8 @@ import SingleMovie from "./Single";
 
 function App() {
   return <div className="w-screen">
-            {/* <Home/> */}
-            <SingleMovie/>
+            <Home/>
+            {/* <SingleMovie/> */}
          </div>
 }
 
