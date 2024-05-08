@@ -3,12 +3,11 @@
 import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons"
 import { useState } from "react"
 
+import { categoriez } from "../utils/constants"
 
-
-const listOfLinks = [{id:1,name:"MOVIES",link:""},
-                     {id:2,name: "TV",link:""},
-                     {id:3,name: "AT HOME",link:""},
-                     {id:4,name: "CORPORATE",link:""}
+const listOfLinks = [{id:1,name:"MOVIES",link:"movies"},
+                     {id:2,name: "TV",link:"tvseries"},
+                     {id:3,name: "ALL",link:"all"},
                     ]
 const listOfSocials = [
                         {id:0, icon:FacebookFilled,link:""},
@@ -16,12 +15,12 @@ const listOfSocials = [
                         {id:2, icon:InstagramFilled,link:""},
 ]
 
-function Header(){
+function Header({handleClick,current}){
     return <div className=" absolute top-0 px-8 py-6 flex flex-col landscape:flex-row w-full z-10  text-white justify-between">
                 <div className="flex w-full landscape:w-[60%] items-center justify-between">
                     <Logo/>
                     <div className="hidden landscape:block">
-                        <NavList/>
+                        <NavList handleClick={handleClick} current = {current}/>
                     </div>
                     <MenuTrigger/>
                 </div>
@@ -42,12 +41,12 @@ function Logo(){
     return <p className="font-barbaropt landscape:text-4xl font-bold hover:cursor-default " >KINOMA</p>
 }
 
-function NavList({list = listOfLinks}){
+function NavList({list = listOfLinks,handleClick,current}){
 
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p  key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
+                        return <p onClick={()=> handleClick(categoriez[aLinksObj.link])} key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
                     })
                 }
             </div>
