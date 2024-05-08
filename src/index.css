@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+body,html,#root{
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url(./Assets/fonts/Montserrat.ttf);
+}
+@font-face {
+    font-family: 'monetizer';
+    src: url(./Assets/fonts/Monetizer.ttf);
+}
+@font-face {
+    font-family: 'barbaro';
+    src: url(./Assets/fonts/barbaro.ttf);
+}
+@font-face {
+    font-family: 'barbaropt';
+    src: url(./Assets/fonts/barbaropunta.ttf);
+}
+@font-face {
+    font-family: 'bebas';
+    src: url(./Assets/fonts/Bebas.ttf);
+}
