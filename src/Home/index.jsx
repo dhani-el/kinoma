@@ -5,12 +5,15 @@ import Movies from "./Movies";
 import Footer from "./Footer";
 import { useState } from "react";
 
-import { categoriez } from "../utils/constants";
+import { categoriez,majCat } from "../utils/constants";
+
+
 
 function Home(){
-    const [majorCategory,setMajorCategory] = useState(categoriez.movies);
     const [minorcategory,setMinorCategory] = useState("TRENDING");
-    const [category,setCategory] = useState(majorCategory[minorcategory].link);
+    const [majorCategory,setMajorCategory] = useState(categoriez.movies);
+    const [majorCat,setMajorCat] = useState(majorCategory[minorcategory].link);
+    // const [category,setCategory] = useState(majorCategory[minorcategory].link);
     function handleMinorCategoryClick(value){
         console.log("current category is ", value);
         setMinorCategory(init=> value)
@@ -19,11 +22,16 @@ function Home(){
         console.log("current category is ", value);
         setMajorCategory(init=> value)
     }
+    function handleCategoryClick(value){
+        console.log("current category is ", value);
+        setMajorCategory(init=> value);
+        setMinorCategory(init=> "TRENDING")
+    }
     return <div className=" min-h-screen bg-black relative w-screen box-border">
-                <MajorTrailer/>
-                <Header handleClick={handleMajorCategoryClick} current = {majorCategory}/>
-                <Categories handleClick={handleMinorCategoryClick} current={minorcategory}/>
-                <Movies majorCategory={majorCategory} category = {majorCategory[minorcategory].link} minorcategory={minorcategory}/>
+                <MajorTrailer type={majorCategory.name} link = {majorCategory["TRENDING"].link}/>
+                <Header handleClick={handleCategoryClick} current = {majorCategory.link}/>
+                <Categories type={majorCategory.name}  handleClick={handleMinorCategoryClick} current={minorcategory}/>
+                <Movies link={majorCategory[minorcategory].link}  minorcategory={majorCategory[minorcategory].name}/>
                 <Footer/>
 
             </div>

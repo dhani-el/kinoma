@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { StarFilled, HeartFilled } from "@ant-design/icons";
 import smple from "../Assets/Images/sample.jpg";
 import Paginator from "./Pagination";
-import { categoriez } from "../utils/constants";
+import { categoriez,majCat } from "../utils/constants";
 
 const sampleMovie = [
                         {
@@ -105,28 +105,27 @@ const sampleMovie = [
                          },
                     ]
 
-function Movies({majorCategory,minorcategory,category}){
+function Movies({majorCategory,minorcategory,category,link}){
     const resetValue = 1
     const [page,setPage] = useState(1);
     const [mainData, setMainData] = useState([]);
-    const second = minorcategory?.link
     const baseUrl = "https://api.themoviedb.org/3/";
     useEffect(function(){
 
-        fetch(`${baseUrl}${category}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        fetch(`${baseUrl}${link}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
         .then(response => response.json())
         .then(response => {setMainData(init=>response); return response})
         .then(response => console.log(response))
         .catch(err => console.error(err));
-    },[page,minorcategory,category])
+    },[page,link])
 
     useEffect(function(){
         setPage(init=> resetValue)
-    },[minorcategory,category])
+    },[link])
 
     return <div className=" w-full">
                 <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
-                    <StartText/>
+                    {minorcategory  == "COMING SOON" && <StartText/>}
                     <Variantii movieData={mainData.results}/>
                 </div>
                 <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
@@ -174,6 +173,38 @@ function Amovie({img,title,status,rating,year}){
 }
 
 
+function Movies2({majorCategory,minorcategory,category}){
+    const resetValue = 1
+    const [page,setPage] = useState(1);
+    const [mainData, setMainData] = useState([]);
+    const second = minorcategory?.link
+    const baseUrl = "https://api.themoviedb.org/3/";
+    useEffect(function(){
+
+        fetch(`${baseUrl}${category}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        .then(response => response.json())
+        .then(response => {setMainData(init=>response); return response})
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+    },[page,minorcategory,category,majorCategory])
+
+    useEffect(function(){
+        setPage(init=> resetValue)
+    },[minorcategory,category,majorCategory])
+
+    return <div className=" w-full">
+                <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
+                    <StartText/>
+                    <Variantii movieData={mainData.results}/>
+                </div>
+                <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
+            </div>
+}
+
+
+function Moviess(){
+    
+}
 
 
 export default Movies
