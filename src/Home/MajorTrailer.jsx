@@ -2,49 +2,59 @@
 import { useEffect, useState } from "react";
 import ADimage from "../Assets/Images/test.jpg";
 import { ArrowLeftOutlined, ArrowRightOutlined, LineOutlined, CaretRightFilled } from "@ant-design/icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { majCat,categoriez } from "../utils/constants";
 
 
-function MajorTrailer(){
+function MajorTrailer({type,link}){
     const [mainData, setMainData] = useState([])
     useEffect(function(){
 
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        fetch(`https://api.themoviedb.org/3/${link}?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
         .then(response => response.json())
         .then(response => {setMainData(init=>response); return response})
         .then(response => console.log(response))
         .catch(err => console.error(err));
-    },[])
+    },[link])
     return <div className="w-full ">
                 {/* <Imagee metaImage={[{image:ADimage,awards:15,nominations:32,title:"LIONSGATE MOVIES",description:"person wey no mind wheni land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?  land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?",currentID:2,timestamp:"3:40",amount:7,thumbnail:ADimage} */}
-                <Imagee metaImage={mainData.results}/>
+                <Imagee metaImage={mainData.results} type={type}/>
             </div>
 }
 
-function Imagee({metaImage=[]}){
+function Imagee({metaImage=[],type}){
     return <div className="w-full h-[85vh] overflow-hidden relative">
-                <div className="w-full h-full absolute top-0 left-0 bg-black opacity-45">
-
-                </div>
-                <div className="h-full flex w-max">
+                <div className="h-full w-full">
+                <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
                     {
                         metaImage.map(function(singleImage){
-                            return <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={singleImage.vote_average} nominations={singleImage.vote_count}
-                            title={singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={singleImage.thumbnail} amount={singleImage.amount} />
+                            return  <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count}
+                            title={type === categoriez.tv.name?singleImage.name:singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />
+                            </SwiperSlide>
                         })
                     }
+                </Swiper>
                 </div>
             </div>
 }
 
 function AnImage({ADimage,awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
-    return <div className="w-screen flex items-center overflow-hidden">
-                <img src={ADimage} className="max-w-full h-auto object-contain" />
+    return <div className="w-screen flex items-center justify-center overflow-hidden h-full">
+                        <div className="w-full h-full absolute top-0 left-0 bg-black opacity-55 z-10">
+
+                        </div>
+                <img src={ADimage} className="max-w-full h-auto object-contain object-left-top -z-10" />
                 <MetaDetails awards={awards} nominations={nominations} title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
             </div>
 }
 
 function MetaDetails({awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
-    return <div className="pl-6 pt-8 flex justify-between w-full items-center absolute text-white">
+    return <div className=" flex justify-between w-[90%] items-center absolute text-white z-50">
         <div className="w-[15vw]">
             <Left awards={awards} nominations={nominations}/>
         </div>
@@ -86,19 +96,19 @@ function Right({title,description,currentID,timestamp,thumbnail,amount}){
 
 function TrailerNIndicator({timestamp,thumbnail,amount}){
     return <div className="flex h-fit w-[90%] items-stretch  justify-between">
-                <div className="flex  w-[80%] items-center justify-between border-t-[0.06rem]">
-                    <div className="w-[50%]" >
+                <div className="flex  w-[80%] items-center justify-center pt-4 border-t-[0.06rem]">
+                    {/* <div className="w-[50%]" >
                         <img src={thumbnail} className="w-100%" />
-                    </div>
-                    <div className="flex items-center gap-[2rem]">
+                    </div> */}
+                        <div className="flex items-center gap-2">
                             <CaretRightFilled className="text-xl p-1 text-white rounded-full border-[0.2rem] border-blue-500 "/>
                         <div>
-                            <p className="text-xs font-bebas">WATCH TRAILER</p>
-                            <p>{timestamp}</p>
+                        <p className="text-sm font-bebas">WATCH TRAILER</p>
+                            {/* <p>{timestamp}</p> */}
                         </div>
                     </div>
                 </div>
-                <Indicator  amount={amount}/>
+                {/* <Indicator  amount={amount}/> */}
              </div>
 }
 
