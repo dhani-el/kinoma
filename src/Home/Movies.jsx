@@ -142,7 +142,7 @@ function Varianti({movieData=[]}){
                 })}
             </div>
 }
-function Variantii({movieData=[],type="movies"}){
+function Variantii({movieData=[],type="movie"}){
     return <>
                 {movieData.map(function(singleData){
                     return <Amovie type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={type=="tv"?singleData.name:singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ type=="tv"? new Date(singleData.first_air_date).getFullYear(): new Date(singleData.release_date).getFullYear()} />
@@ -160,7 +160,7 @@ function StartText(){
 function Amovie({type,id,img,title,status,rating,year}){
     const navigate = useNavigate()
     function handleClickNavigation(){
-        navigate(`/single/${type}/${id}`)
+        navigate(`/single/${type ==="movies" ?"movie":type}/${id}`)
     }
     return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
                 <img src={img}/>
