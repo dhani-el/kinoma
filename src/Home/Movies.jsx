@@ -3,6 +3,7 @@ import { StarFilled, HeartFilled } from "@ant-design/icons";
 import smple from "../Assets/Images/sample.jpg";
 import Paginator from "./Pagination";
 import { categoriez,majCat } from "../utils/constants";
+import { useNavigate,useLocation, useParams } from "react-router-dom";
 
 const sampleMovie = [
                         {
@@ -105,7 +106,7 @@ const sampleMovie = [
                          },
                     ]
 
-function Movies({majorCategory,minorcategory,category,link}){
+function Movies({majorCategory,minorcategory,type,link}){
     const resetValue = 1
     const [page,setPage] = useState(1);
     const [mainData, setMainData] = useState([]);
@@ -126,7 +127,7 @@ function Movies({majorCategory,minorcategory,category,link}){
     return <div className=" w-full">
                 <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
                     {minorcategory  == "COMING SOON" && <StartText/>}
-                    <Variantii movieData={mainData.results}/>
+                    <Variantii movieData={mainData.results} type = {type}/>
                 </div>
                 <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
             </div>
@@ -141,10 +142,10 @@ function Varianti({movieData=[]}){
                 })}
             </div>
 }
-function Variantii({movieData=[]}){
+function Variantii({movieData=[],type="movies"}){
     return <>
                 {movieData.map(function(singleData){
-                    return <Amovie img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={singleData.title} status={singleData.status} rating={Math.floor(singleData.vote_average)} year={new Date(singleData.release_date).getFullYear()} />
+                    return <Amovie type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={type=="tv"?singleData.name:singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ type=="tv"? new Date(singleData.first_air_date).getFullYear(): new Date(singleData.release_date).getFullYear()} />
                 })}
             </>
 }
@@ -156,8 +157,12 @@ function StartText(){
             </div>
 }
 
-function Amovie({img,title,status,rating,year}){
-    return <div className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
+function Amovie({type,id,img,title,status,rating,year}){
+    const navigate = useNavigate()
+    function handleClickNavigation(){
+        navigate(`/single/${type}/${id}`)
+    }
+    return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
                 <img src={img}/>
                 <p className="text-nowrap text-ellipsis w-full overflow-hidden whitespace-nowrap font-montserrat font-semibold text-xs text-center ">{title}</p>
                 <div className="flex w-full justify-between items-center">
