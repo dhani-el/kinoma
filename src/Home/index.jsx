@@ -29,9 +29,9 @@ function Home(){
     }
     return <div className=" min-h-screen bg-black relative w-screen box-border">
                 <MajorTrailer type={majorCategory.name} link = {majorCategory["TRENDING"].link}/>
-                <Header handleClick={handleCategoryClick} current = {majorCategory}/>
+                <Header handleClick={handleCategoryClick} current = {majorCategory.link}/>
                 <Categories type={majorCategory.name}  handleClick={handleMinorCategoryClick} current={minorcategory}/>
-                <Movies majorCategory={majorCat} link={majorCategory[minorcategory].link} category = {majorCat} minorcategory={minorcategory}/>
+                <Movies link={majorCategory[minorcategory].link}  minorcategory={majorCategory[minorcategory].name}/>
                 <Footer/>
 
             </div>

@@ -46,7 +46,7 @@ function NavList({list = listOfLinks,handleClick,current}){
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p onClick={()=> handleClick(aLinksObj.link)} key={aLinksObj.id} className="font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default hover:text-white" >{aLinksObj.name}</p>
+                        return <p onClick={()=> handleClick(aLinksObj.link)} key={aLinksObj.id} className={`${current}font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current ==aLinksObj.link && text-white} `} >{aLinksObj.name}</p>
                     })
                 }
             </div>
@@ -81,4 +81,4 @@ function Socials({socials=listOfSocials}){
             </div>
 }
 
-export default Header
+export default Header;

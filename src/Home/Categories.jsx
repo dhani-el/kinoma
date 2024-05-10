@@ -11,7 +11,7 @@ const moviecategorys = [
 ]
 const tvcategorys = [
                     {name:"TRENDING",rep:"TRENDING"},
-                    {name:"AIRING TODAY",rep:"AIRING_TODAY"},
+                    {name:"UPCOMING",rep:"AIRING_TODAY"},
                     {name:"ON AIR",rep:"ON_AIR"},
                     {name:"POPULAR",rep:"POPULAR"},
                     {name:"TOP RATED",rep:"TOP_RATED"},

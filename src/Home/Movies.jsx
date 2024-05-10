@@ -125,7 +125,7 @@ function Movies({majorCategory,minorcategory,category,link}){
 
     return <div className=" w-full">
                 <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
-                    <StartText/>
+                    {minorcategory  == "COMING SOON" && <StartText/>}
                     <Variantii movieData={mainData.results}/>
                 </div>
                 <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
