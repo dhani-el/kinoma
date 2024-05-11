@@ -3,27 +3,33 @@ import Sample from "../Assets/Images/sample.jpg"
 
 import { StarFilled,ScheduleOutlined, MenuOutlined } from "@ant-design/icons"
 import { useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
 
-function MainContent({data}){
+function MainContent({data,writers,casts,director ,videoKey}){
     const queries  = useParams();
-    return <div className="w-[80%] h-screen pt-4 px-4 overflow-hidden">
-                    <VideoComponent/>
+    console.log("videokey is",videoKey);
+    return <div className="w-full h-screen pt-4 px-4 overflow-y-scroll bg-black">
+                    <Logo/>
+                    <VideoComponent url={videoKey?.key} />
                     {data && <MainInfoComponent rating={{avg:data.vote_average,tot:data.vote_count}} genre={data.genres} episodes={data.number_of_episodes}type={queries.type} pgrating={data.adult} title={queries.type==="tv" ? data.name:data.title} year={queries.type==="tv" ? data.first_air_date:data.release_date}/>}
-                    <div className="pl-8 h-[40%] justify-between overflow-y-scroll flex">
-                        {data && <ExtraInfoComponent number={data.popularity} overview={data.overview} director={data.created_by} />}
+                    <div className="pl-8  justify-between flex">
+                        {data && <ExtraInfoComponent stars={casts.slice(0,11)} number={data.popularity} writers={writers} overview={data.overview} director={director.name}  />}
                         <ComplimentaryInfo/>
                     </div>
              </div>
 }
 
-function VideoComponent(){
-    return <div className="w-full h-[50%] rounded-lg bg-blue-400">
-                <video/>
+function Logo(){
+    return <p className=" text-center pt-4  font-barbaropt landscape:text-4xl font-bold hover:cursor-default text-blue-900" >KINOMA</p>
+}
+function VideoComponent({url}){
+    return <div className="w-full h-[85%] rounded-lg bg-blue-400">
+                    <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />
             </div>
 }
 
 function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episodes}){
-    return <div className="flex w-full justify-between  px-8 py-2 font-bold items-center ">
+    return <div className="flex text-white w-full justify-between  px-8 py-2 font-bold items-center ">
                 <div className="flex gap-4 justify-between items-center ">
                     <p>{title}</p>
                     <p>{new Date(year).getFullYear()}</p>
@@ -49,12 +55,13 @@ function Rating({rating}){
     </div>
 }
 
-function ExtraInfoComponent({overview,director,number}){
-    return <div className="w-[70%] text-sm font-montserrat font-medium flex flex-col justify-between">
+function ExtraInfoComponent({overview,director,number,writers,stars}){
+    console.log("stars :",stars);
+    return <div className="w-[70%] text-white text-sm font-montserrat font-medium flex flex-col justify-between">
                 <p>{overview}</p>
-                {director && <p className="">Director: <span className="text-blue-500">{director[0].name}</span></p>}
-                <p className="">Writer: <span className="text-blue-500">Jim Kash,Jack Epps,Peter Craig</span></p>
-                <p className="">Stars: <span className="text-blue-500">Tom Cruise, Jennifer Connelly,Miles Teller</span></p>
+                <p className="">Director: <span className="text-blue-500">{director}</span></p>
+                <p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers.map(writer=><p>{writer.name},</p>)}</span></p>
+                <p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars.map(star=><p>{star},</p>)}</span></p>
                 <Accolades number={number} />
             </div>
 }
@@ -91,9 +98,9 @@ function Recommendations({srcs = [Sample,Sample,Sample]}){
 }
 
 function Accolades({number}){
-    return <div className=" relative flex w-full border-[0.05rem] border-black  rounded-md items-center gap-1">
+    return <div className=" relative flex w-full border-[0.05rem] border-white  rounded-md items-center gap-1">
                 <p className=" border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rating #{Math.floor(number)}</p>
-                <p>Awards 9 nominations</p>
+                <p className="text-white">Awards 9 nominations</p>
             </div>
 }
 export default MainContent
