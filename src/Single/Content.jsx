@@ -42,10 +42,15 @@ function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episo
             </div>
 }
 
-function Genre({genre}){
+function Genre({genre= []}){
+    console.log("genre:",genre );
     return <div className="flex gap-2 font-normal ">
-                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{genre[0].name}</p>
-                <p className="p-1 border-blue-500 border-[0.06rem] flex items-center justify-center text-center rounded-md">{genre[1].name}</p>
+                {
+                    genre?.slice(0,3).map(function(agenre){
+                        return <p className="p-1 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{agenre.name}</p>
+                 
+                    })
+                }
             </div>
 }
 
