@@ -8,32 +8,32 @@ import ReactPlayer from "react-player";
 function MainContent({data,writers,casts,director ,videoKey}){
     const queries  = useParams();
     console.log("videokey is",videoKey);
-    return <div className="w-full h-screen pt-4 px-4 overflow-y-scroll bg-black">
+    return <div className="w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll bg-black">
                     <Logo/>
                     <VideoComponent url={videoKey?.key} />
-                    {data && <MainInfoComponent rating={{avg:data.vote_average,tot:data.vote_count}} genre={data.genres} episodes={data.number_of_episodes}type={queries.type} pgrating={data.adult} title={queries.type==="tv" ? data.name:data.title} year={queries.type==="tv" ? data.first_air_date:data.release_date}/>}
+                    {data && <MainInfoComponent rating={{avg:data.vote_average,tot:data.vote_count}} genre={data.genres} episodes={data.number_of_episodes}type={queries.type} pgrating={data.adult} title={ data.name || data.title} year={data.first_air_date || data.release_date}/>}
                     <div className="pl-8  justify-between flex">
-                        {data && <ExtraInfoComponent stars={casts.slice(0,11)} number={data.popularity} writers={writers} overview={data.overview} director={director.name}  />}
+                        {data && <ExtraInfoComponent stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />}
                         <ComplimentaryInfo/>
                     </div>
              </div>
 }
 
 function Logo(){
-    return <p className=" text-center pt-4  font-barbaropt landscape:text-4xl font-bold hover:cursor-default text-blue-900" >KINOMA</p>
+    return <p className=" py-2 self-start font-barbaropt landscape:text-4xl font-bold hover:cursor-default text-slate-200" >KINOMA</p>
 }
 function VideoComponent({url}){
-    return <div className="w-full h-[85%] rounded-lg bg-blue-400">
-                    <ReactPlayer url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />
+    return <div className=" w-[90%] h-[65vh] rounded-lg ">
+                    <ReactPlayer  url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />
             </div>
 }
 
 function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episodes}){
     return <div className="flex text-white w-full justify-between  px-8 py-2 font-bold items-center ">
                 <div className="flex gap-4 justify-between items-center ">
-                    <p>{title}</p>
+                    <p className="text-3xl block w-[85%] overflow-hidden text-ellipsis whitespace-nowrap">{title}</p>
                     <p>{new Date(year).getFullYear()}</p>
-                    <p>{pgrating?"PG-18":"PG-13"}</p>
+                    <p className="whitespace-nowrap">{pgrating?"PG-18":"PG-13"}</p>
                     {type === "movies"&&<p>{duration}</p>}
                     {type === "tv"&&<p>{episodes} Eps</p>}
                    {genre && <Genre genre={genre}/>}
@@ -44,8 +44,8 @@ function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episo
 
 function Genre({genre}){
     return <div className="flex gap-2 font-normal ">
-                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md">{genre[0].name}</p>
-                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md">{genre[1].name}</p>
+                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{genre[0].name}</p>
+                <p className="p-1 border-blue-500 border-[0.06rem] flex items-center justify-center text-center rounded-md">{genre[1].name}</p>
             </div>
 }
 
@@ -56,12 +56,11 @@ function Rating({rating}){
 }
 
 function ExtraInfoComponent({overview,director,number,writers,stars}){
-    console.log("stars :",stars);
-    return <div className="w-[70%] text-white text-sm font-montserrat font-medium flex flex-col justify-between">
+    return <div className="w-[70%] gap-6 pb-6 text-white text-sm font-montserrat font-medium flex flex-col justify-between">
                 <p>{overview}</p>
                 <p className="">Director: <span className="text-blue-500">{director}</span></p>
-                <p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers.map(writer=><p>{writer.name},</p>)}</span></p>
-                <p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars.map(star=><p>{star},</p>)}</span></p>
+                <p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></p>
+                <p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars?.map(star=><p>{star},</p>)}</span></p>
                 <Accolades number={number} />
             </div>
 }

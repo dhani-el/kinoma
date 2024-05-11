@@ -13,7 +13,6 @@ function Movies({majorCategory,minorcategory,type,link}){
     const [mainData, setMainData] = useState([]);
     const baseUrl = "https://api.themoviedb.org/3/";
     useEffect(function(){
-
         fetch(`${baseUrl}${link}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
         .then(response => response.json())
         .then(response => {setMainData(init=>response); return response})
@@ -46,7 +45,7 @@ function Varianti({movieData=[]}){
 function Variantii({movieData=[],type="movie"}){
     return <>
                 {movieData.map(function(singleData){
-                    return <Amovie type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={type=="tv"?singleData.name:singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ type=="tv"? new Date(singleData.first_air_date).getFullYear(): new Date(singleData.release_date).getFullYear()} />
+                    return <Amovie  realtype={singleData.title? "movie":"tv"} type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={singleData.name || singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ new Date(singleData.first_air_date || singleData.release_date).getFullYear()} />
                 })}
             </>
 }
@@ -58,10 +57,14 @@ function StartText(){
             </div>
 }
 
-function Amovie({type,id,img,title,status,rating,year}){
+function Amovie({realtype,type,id,img,title,status,rating,year}){
     const navigate = useNavigate()
     function handleClickNavigation(){
-        navigate(`/single/${type ==="movies" ?"movie":type}/${id}`)
+        // if (type ==="all"){
+        // navigate(`/single/${type ==="movies" ?"movie":type}/${id}`)
+
+        // }
+        navigate(`/single/${realtype}/${id}`)
     }
     return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
                 <img src={img}/>

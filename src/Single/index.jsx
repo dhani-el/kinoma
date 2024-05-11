@@ -16,11 +16,13 @@ function SingleMovie(){
     const [writers, setWriters] = useState();
     const [cast,setCast]=useState();
     useEffect(function(){
-        fetch(`${baseUrl}${queries.type}/${queries.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
-        .then(response => response.json())
-        .then(response => {setData(init=>response); return response})
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
+
+            fetch(`${baseUrl}${queries.type}/${queries.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {setData(init=>response); return response})
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+
 
     },[]);
 
@@ -29,7 +31,7 @@ function SingleMovie(){
         .then(response => response.json())
         .then(response => {setVideoData(init=>{
             return response.results.find(function(result){
-                return (result.name.match("Official Trailer")|| result.name.match("Official Teaser") )  && result.key
+                return (result.name.match("Official Trailer")|| result.name.match("Official Teaser") || result.name.match("Trailer") )  && result.key
             })});
              return response})
         .then(response => console.log(response))
@@ -41,7 +43,7 @@ function SingleMovie(){
         fetch(`${baseUrl}${queries.type}/${queries.id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
         .then(response => response.json())
         .then(response => {setDirector(init=>{
-            return response.crew.find(function(result){
+            return response?.crew?.find(function(result){
                 console.log("dir results :",result);
                 return result.job === "Director"
             })});

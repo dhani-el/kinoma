@@ -34,7 +34,7 @@ function Imagee({metaImage=[],type}){
                     {
                         metaImage.map(function(singleImage){
                             return  <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count}
-                            title={type === categoriez.tv.name?singleImage.name:singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />
+                            title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />
                             </SwiperSlide>
                         })
                     }
