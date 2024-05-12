@@ -25,7 +25,7 @@ function Paginator({number, current}){
 }
 
 // function Indicat0Dest optimization
-function Paginator2({number, current,indicatoDest}){
+function Paginator2({number=[2], current=1,indicatoDest}){
     const maxPagAmt = 10;
     function arrayLize(number){
         let ray = []

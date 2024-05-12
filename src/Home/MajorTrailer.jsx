@@ -9,6 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import { majCat,categoriez } from "../utils/constants";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 function MajorTrailer({type,link}){
@@ -27,18 +29,17 @@ function MajorTrailer({type,link}){
             </div>
 }
 
-function Imagee({metaImage=[],type}){
+function Imagee({metaImage,type}){
     return <div className="w-full h-[85vh] overflow-hidden relative">
                 <div className="h-full w-full">
-                <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
-                    {
-                        metaImage.map(function(singleImage){
-                            return  <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count}
-                            title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />
-                            </SwiperSlide>
+                {metaImage ? <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
+
+                              {metaImage?.map(function(singleImage){
+                            return <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count} title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />  
+                            </SwiperSlide> 
                         })
-                    }
-                </Swiper>
+                 }
+                </Swiper> : <Skeleton baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full h-[85vh] flex" />}
                 </div>
             </div>
 }

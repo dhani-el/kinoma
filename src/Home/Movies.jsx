@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { StarFilled, HeartFilled } from "@ant-design/icons";
-import smple from "../Assets/Images/sample.jpg";
 import Paginator from "./Pagination";
 import { categoriez,majCat } from "../utils/constants";
 import { useNavigate,useLocation, useParams } from "react-router-dom";
 
 
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function Movies({majorCategory,minorcategory,type,link}){
     const resetValue = 1
     const [page,setPage] = useState(1);
-    const [mainData, setMainData] = useState([]);
+    const [mainData, setMainData] = useState();
     const baseUrl = "https://api.themoviedb.org/3/";
     useEffect(function(){
         fetch(`${baseUrl}${link}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
@@ -27,12 +28,26 @@ function Movies({majorCategory,minorcategory,type,link}){
     return <div className=" w-full">
                 <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
                     {minorcategory  == "COMING SOON" && <StartText/>}
-                    <Variantii movieData={mainData.results} type = {type}/>
+                    {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>
-                <Paginator current={mainData.page} number={mainData.total_pages} indicatoDest={setPage}/>
+                <Paginator current={mainData?.page} number={mainData?.total_pages} indicatoDest={setPage}/>
             </div>
 }
 
+function MoviesFallback({amount}){
+    function arrayLize(number){
+        let ray = []
+        for(let i = 0  ; i< number ; i++){
+            ray.push(i);
+        }
+        return ray
+    }
+    return <>
+                {arrayLize(amount).map(function(){
+                    return <Skeleton baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full min-h-[25vh] flex" />
+                })}
+             </>
+}
 
 function Varianti({movieData=[]}){
     return <div>
@@ -66,8 +81,9 @@ function Amovie({realtype,type,id,img,title,status,rating,year}){
         // }
         navigate(`/single/${realtype}/${id}`)
     }
+    const [imgloaded,setImgLoaded] = useState(false);
     return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
-                <img src={img}/>
+                {<img src={img} onLoad={()=>setImgLoaded(init=>true)}/> || <Skeleton  baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full min-h-[25vh] flex"/>}
                 <p className="text-nowrap text-ellipsis w-full overflow-hidden whitespace-nowrap font-montserrat font-semibold text-xs text-center ">{title}</p>
                 <div className="flex w-full justify-between items-center">
                     <p className="font-monetizer text-slate-500">{year}</p>
