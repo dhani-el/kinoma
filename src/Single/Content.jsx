@@ -2,58 +2,75 @@
 import Sample from "../Assets/Images/sample.jpg"
 
 import { StarFilled,ScheduleOutlined, MenuOutlined } from "@ant-design/icons"
+import { useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
-function MainContent(){
-    return <div className="w-[80%] h-screen pt-4 px-4 overflow-hidden">
-                    <VideoComponent/>
-                    <MainInfoComponent/>
-                    <div className="pl-8 h-[40%] justify-between overflow-y-scroll flex">
-                        <ExtraInfoComponent/>
+function MainContent({data,writers,casts,director ,videoKey}){
+    const queries  = useParams();
+    console.log("videokey is",videoKey);
+    return <div className="w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll bg-black">
+                    <Logo/>
+                    <VideoComponent url={videoKey?.key} />
+                     <MainInfoComponent rating={{avg:data?.vote_average,tot:data?.vote_count}} genre={data?.genres} episodes={data?.number_of_episodes}type={queries.type} pgrating={data?.adult} title={ data?.name || data?.title} year={data?.first_air_date || data?.release_date}/>
+                    <div className="pl-8  justify-between flex">
+                        <ExtraInfoComponent stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />
                         <ComplimentaryInfo/>
                     </div>
              </div>
 }
 
-function VideoComponent(){
-    return <div className="w-full h-[50%] rounded-lg bg-blue-400">
-                <video/>
+function Logo(){
+    return <p className=" py-2 self-start font-barbaropt landscape:text-4xl font-bold hover:cursor-default text-slate-200" >KINOMA</p>
+}
+function VideoComponent({url}){
+    return <div className=" w-[90%] h-[65vh] rounded-lg ">
+                    {url ? <ReactPlayer  url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />:<Skeleton baseColor="#202020" highlightColor="#444" count={1} height={"100%"}/>}
             </div>
 }
 
-function MainInfoComponent(){
-    return <div className="flex w-full justify-between  px-8 py-2 font-bold items-center ">
-                <div className="flex gap-4 justify-between items-center ">
-                    <p>Top Gun Maverick</p>
-                    <p>2022</p>
-                    <p>PG-13</p>
-                    <p>2h 10m</p>
-                    <Genre/>
+function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episodes}){
+    return <div className="flex text-white w-full justify-between  px-8 py-2 font-bold items-center ">
+                <div className="flex gap-4 justify-between items-center w-[70%] ">
+                    <p className="text-3xl block max-w-[85%] overflow-hidden text-ellipsis whitespace-nowrap">{title || <Skeleton containerClassName="w-full block" baseColor="#202020" highlightColor="#444" />}</p>
+                    <p>{new Date(year).getFullYear() ||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />}</p>
+                   <p className="whitespace-nowrap">{(pgrating?"PG-18":"PG-13")}</p>
+                    {type === "movies"&&<p>{duration||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />}</p>}
+                    {type === "tv"&&<p>{episodes||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />} Eps</p>}
+                   {genre ? <Genre genre={genre}/>: <Skeleton containerClassName="w-[4rem] block" baseColor="#202020" highlightColor="#444" />}
                 </div>
-                <Rating/>
+                {rating.avg ? <Rating rating={rating}/> : <Skeleton containerClassName="w-[6rem] block" baseColor="#202020" highlightColor="#444" />}
             </div>
 }
 
-function Genre(){
+function Genre({genre= []}){
+    console.log("genre:",genre );
     return <div className="flex gap-2 font-normal ">
-                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md">Drama</p>
-                <p className="p-1 border-blue-500 border-[0.06rem] rounded-md">Action</p>
+                {
+                    genre?.slice(0,3).map(function(agenre){
+                        return <p className="p-1 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{agenre.name}</p>
+                 
+                    })
+                }
             </div>
 }
 
-function Rating(){
+function Rating({rating}){
     return <div className="flex items-center">
-        <StarFilled className="text-yellow-400" /><p>8.5</p>|350k
+        <StarFilled className="text-yellow-400" />
+        <p>{String(rating.avg).slice(0,3)}</p>|{rating.tot}
     </div>
 }
 
-function ExtraInfoComponent(){
-    return <div className="w-[70%] text-sm font-montserrat font-medium flex flex-col justify-between">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab architecto eum, ducimus, aliquid iusto illum neque magni ipsum maxime amet dignissimos totam doloremque. Odit velit quas error explicabo at itaque quibusdam mollitia eligendi dolorum quia? Commodi debitis quibusdam quaerat voluptate suscipit explicabo totam possimus error.</p>
-                <p className="">Director: <span className="text-blue-500">Joseph Kasinski</span></p>
-                <p className="">Writer: <span className="text-blue-500">Jim Kash,Jack Epps,Peter Craig</span></p>
-                <p className="">Stars: <span className="text-blue-500">Tom Cruise, Jennifer Connelly,Miles Teller</span></p>
-                <Accolades/>
+function ExtraInfoComponent({overview,director,number,writers,stars}){
+    return <div className="w-[70%] gap-6 pb-6 text-white text-sm font-montserrat font-medium flex flex-col justify-between">
+                <p >{overview ||  <Skeleton containerClassName="w-full min-h-[8rem] flex" baseColor="#202020" highlightColor="#444" />}</p>
+                {director ? <p className="">Director: <span className="text-blue-500">{director}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {writers ?<p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {stars?<p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars?.map(star=><p>{star},</p>)}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {number ? <Accolades number={number} />  : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
             </div>
 }
 
@@ -88,10 +105,10 @@ function Recommendations({srcs = [Sample,Sample,Sample]}){
              </div>
 }
 
-function Accolades(){
-    return <div className=" relative flex w-full border-[0.05rem] border-black  rounded-md items-center gap-1">
-                <p className=" border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rated Movies #64</p>
-                <p>Awards 9 nominations</p>
+function Accolades({number}){
+    return <div className=" relative flex w-full border-[0.05rem] border-white  rounded-md items-center gap-1">
+                <p className=" border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rating #{Math.floor(number)}</p>
+                <p className="text-white">Awards 9 nominations</p>
             </div>
 }
 export default MainContent
