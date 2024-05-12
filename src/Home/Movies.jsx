@@ -25,7 +25,7 @@ function Movies({majorCategory,minorcategory,type,link}){
         setPage(init=> resetValue)
     },[link])
 
-    return <div className=" w-full">
+    return <div className=" w-full flex flex-col items-center">
                 <div className=" w-full p-12 grid grid-cols-1 landscape:grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
                     {minorcategory  == "COMING SOON" && <StartText/>}
                     {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
