@@ -1,4 +1,4 @@
-
+import { Fragment } from "react"
 
 import { majCat,categoriez } from "../utils/constants"
 
@@ -20,7 +20,7 @@ const tvcategorys = [
 
 // optimze handleClick
 function Categories({type,handleClick,current}){
-    return <div className={`relative mt-2 flex w-full pl-[30%] gap-[5%]`} >  
+    return <div className={`relative mt-2 flex w-full overflow-hidden justify-between landscape:justify-start px-4 landscape:px-0 landscape:pl-[30%] landscape:gap-[5%]`} >  
                 {type === categoriez.movies.name && <Movies handleClick={handleClick}  current={current} lists={moviecategorys}/>}
                 {type === categoriez.tv.name && <Tv handleClick={handleClick}  current={current} lists={tvcategorys}/>}
                 {type === categoriez.all.name && <p onClick={()=>handleClick(majCat.all)} className={`underline decoration-blue-500 text-white text-lg font-bebas hover:cursor-default self-center text-center w-full `} >ALL</p>}
@@ -28,9 +28,9 @@ function Categories({type,handleClick,current}){
 }
 
 function Movies({lists,current,handleClick}){
-    return <>
+    return < >
                { lists.map(function(oneCategory){
-                    return <p onClick={()=>handleClick(oneCategory.rep)} className={`${current === oneCategory.rep && "underline decoration-blue-500 text-white"} text-slate-500 text-lg font-bebas hover:cursor-default hover:text-white`} >{oneCategory.name}</p>
+                    return <p onClick={()=>handleClick(oneCategory.rep)} className={`${current === oneCategory.rep && " underline decoration-blue-500 text-white"} whitespace-nowrap text-nowrap text-slate-500 text-lg font-bebas hover:cursor-default hover:text-white`} >{oneCategory.name}</p>
                     })}
         </>
 }

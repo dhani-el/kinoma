@@ -26,7 +26,7 @@ function Movies({majorCategory,minorcategory,type,link}){
     },[link])
 
     return <div className=" w-full">
-                <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
+                <div className=" w-full p-12 grid grid-cols-1 landscape:grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
                     {minorcategory  == "COMING SOON" && <StartText/>}
                     {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>

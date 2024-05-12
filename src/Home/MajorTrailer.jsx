@@ -30,7 +30,7 @@ function MajorTrailer({type,link}){
 }
 
 function Imagee({metaImage,type}){
-    return <div className="w-full h-[85vh] overflow-hidden relative">
+    return <div className="w-full h-auto landscape:h-[85vh] overflow-hidden relative">
                 <div className="h-full w-full">
                 {metaImage ? <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
 
@@ -39,7 +39,7 @@ function Imagee({metaImage,type}){
                             </SwiperSlide> 
                         })
                  }
-                </Swiper> : <Skeleton baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full h-[85vh] flex" />}
+                </Swiper> : <Skeleton baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full h-[40vh] landscape:h-[85vh] flex" />}
                 </div>
             </div>
 }
