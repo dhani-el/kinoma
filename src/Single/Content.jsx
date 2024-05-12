@@ -4,6 +4,9 @@ import Sample from "../Assets/Images/sample.jpg"
 import { StarFilled,ScheduleOutlined, MenuOutlined } from "@ant-design/icons"
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 function MainContent({data,writers,casts,director ,videoKey}){
     const queries  = useParams();
@@ -11,9 +14,9 @@ function MainContent({data,writers,casts,director ,videoKey}){
     return <div className="w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll bg-black">
                     <Logo/>
                     <VideoComponent url={videoKey?.key} />
-                    {data && <MainInfoComponent rating={{avg:data.vote_average,tot:data.vote_count}} genre={data.genres} episodes={data.number_of_episodes}type={queries.type} pgrating={data.adult} title={ data.name || data.title} year={data.first_air_date || data.release_date}/>}
+                     <MainInfoComponent rating={{avg:data?.vote_average,tot:data?.vote_count}} genre={data?.genres} episodes={data?.number_of_episodes}type={queries.type} pgrating={data?.adult} title={ data?.name || data?.title} year={data?.first_air_date || data?.release_date}/>
                     <div className="pl-8  justify-between flex">
-                        {data && <ExtraInfoComponent stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />}
+                        <ExtraInfoComponent stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />
                         <ComplimentaryInfo/>
                     </div>
              </div>
@@ -24,21 +27,21 @@ function Logo(){
 }
 function VideoComponent({url}){
     return <div className=" w-[90%] h-[65vh] rounded-lg ">
-                    <ReactPlayer  url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />
+                    {url ? <ReactPlayer  url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={'100%'} muted = {true} controls={true} light={true}  />:<Skeleton baseColor="#202020" highlightColor="#444" count={1} height={"100%"}/>}
             </div>
 }
 
 function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episodes}){
     return <div className="flex text-white w-full justify-between  px-8 py-2 font-bold items-center ">
-                <div className="flex gap-4 justify-between items-center ">
-                    <p className="text-3xl block w-[85%] overflow-hidden text-ellipsis whitespace-nowrap">{title}</p>
-                    <p>{new Date(year).getFullYear()}</p>
-                    <p className="whitespace-nowrap">{pgrating?"PG-18":"PG-13"}</p>
-                    {type === "movies"&&<p>{duration}</p>}
-                    {type === "tv"&&<p>{episodes} Eps</p>}
-                   {genre && <Genre genre={genre}/>}
+                <div className="flex gap-4 justify-between items-center w-[70%] ">
+                    <p className="text-3xl block max-w-[85%] overflow-hidden text-ellipsis whitespace-nowrap">{title || <Skeleton containerClassName="w-full block" baseColor="#202020" highlightColor="#444" />}</p>
+                    <p>{new Date(year).getFullYear() ||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />}</p>
+                   <p className="whitespace-nowrap">{(pgrating?"PG-18":"PG-13")}</p>
+                    {type === "movies"&&<p>{duration||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />}</p>}
+                    {type === "tv"&&<p>{episodes||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />} Eps</p>}
+                   {genre ? <Genre genre={genre}/>: <Skeleton containerClassName="w-[4rem] block" baseColor="#202020" highlightColor="#444" />}
                 </div>
-                <Rating rating={rating}/>
+                {rating.avg ? <Rating rating={rating}/> : <Skeleton containerClassName="w-[6rem] block" baseColor="#202020" highlightColor="#444" />}
             </div>
 }
 
@@ -56,17 +59,18 @@ function Genre({genre= []}){
 
 function Rating({rating}){
     return <div className="flex items-center">
-        <StarFilled className="text-yellow-400" /><p>{String(rating.avg).slice(0,3)}</p>|{rating.tot}
+        <StarFilled className="text-yellow-400" />
+        <p>{String(rating.avg).slice(0,3)}</p>|{rating.tot}
     </div>
 }
 
 function ExtraInfoComponent({overview,director,number,writers,stars}){
     return <div className="w-[70%] gap-6 pb-6 text-white text-sm font-montserrat font-medium flex flex-col justify-between">
-                <p>{overview}</p>
-                <p className="">Director: <span className="text-blue-500">{director}</span></p>
-                <p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></p>
-                <p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars?.map(star=><p>{star},</p>)}</span></p>
-                <Accolades number={number} />
+                <p >{overview ||  <Skeleton containerClassName="w-full min-h-[8rem] flex" baseColor="#202020" highlightColor="#444" />}</p>
+                {director ? <p className="">Director: <span className="text-blue-500">{director}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {writers ?<p className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {stars?<p className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars?.map(star=><p>{star},</p>)}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {number ? <Accolades number={number} />  : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
             </div>
 }
 
