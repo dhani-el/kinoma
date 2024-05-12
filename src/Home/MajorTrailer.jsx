@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
 import { majCat,categoriez } from "../utils/constants";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { useMediaQuery } from 'react-responsive'
 
 function MajorTrailer({type,link}){
     const [mainData, setMainData] = useState([])
@@ -30,12 +30,13 @@ function MajorTrailer({type,link}){
 }
 
 function Imagee({metaImage,type}){
+    const isLandscape = useMediaQuery({ query: '(orientation: portrait)' })
     return <div className="w-full h-auto landscape:h-[85vh] overflow-hidden relative">
                 <div className="h-full w-full">
                 {metaImage ? <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
 
                               {metaImage?.map(function(singleImage){
-                            return <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count} title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />  
+                            return <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${isLandscape?singleImage.poster_path:singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count} title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />  
                             </SwiperSlide> 
                         })
                  }
@@ -55,28 +56,28 @@ function AnImage({ADimage,awards,nominations,title,description,currentID,timesta
 }
 
 function MetaDetails({awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
-    return <div className=" flex justify-between w-[90%] items-center absolute text-white z-50">
-        <div className="w-[15vw]">
+    return <div className=" gap-[3rem] landscape:gap-0 flex flex-col-reverse landscape:flex-row justify-between w-[90%] items-center absolute text-white z-50">
+        <div className="w-full landscape:w-[15vw] flex items-center justify-center">
             <Left awards={awards} nominations={nominations}/>
         </div>
-        <div className="w-[30vw]">
+        <div className="w-full landscape:w-[30vw]">
             <Right title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
         </div>
     </div>
 }
 
 function Left({awards,nominations}){
-    return <div className="w-full h-full justify-between items-center flex landscape:flex-col">
+    return <div className="w-[60%] landscape:w-[90%] h-full justify-between items-center flex landscape:flex-col">
                 <div className="flex flex-col items-center">
-                    <p className="font-bebas text-7xl">{awards}</p>
+                    <p className="font-bebas text-3xl landscape:text-7xl">{awards}</p>
                     <p className="font-montserrat text-[0.6rem] font-bold">Rating</p>
                 </div>
                 {/* <p className="text-8xl self-start font-montserrat flex items-start align-text-top ">
                     __
                 </p> */}
-                <LineOutlined  className="text-6xl self-start font-montserrat flex items-start "/>
+                <LineOutlined  className=" hidden text-4xl landscape:text-6xl self-start font-montserrat landscape:flex items-start "/>
                 <div className="flex flex-col items-center">
-                    <p className="font-bebas text-7xl">{nominations}</p>
+                    <p className="font-bebas text-3xl landscape:text-7xl">{nominations}</p>
                     <p className="text-center font-montserrat text-[0.6rem] font-bold">Voters</p>
                 </div>
     </div>
@@ -84,11 +85,11 @@ function Left({awards,nominations}){
 
 function Right({title,description,currentID,timestamp,thumbnail,amount}){
     return <div className="w-full flex flex-col gap-6">
-                <div className="w-[90%] overflow-hidden">
-                    <p className="w-full max-h-[6rem] text-5xl overflow-hidden font-bebas text-ellipsis text-wrap break-words  text-left">{title}</p>
+                <div className="w-full landscape:w-[90%] overflow-hidden">
+                    <p className="w-full max-h-[6rem] text-2xl landscape:text-5xl overflow-hidden font-bebas text-ellipsis text-wrap break-words  text-center">{title}</p>
                 </div>
                 <div className="w-full  flex-col">
-                <p className="w-[90%] max-h-[6.125rem] text-sm overflow-hidden text-ellipsis  font-montserrat font-medium">{description} </p>
+                <p className="w-full landscape:w-[90%] self-center landscape:self-start max-h-[6.125rem] text-pretty text-sm overflow-hidden text-ellipsis  font-montserrat font-medium">{description} </p>
                 <p className="w-[90%] text-end">{currentID}</p>
                 </div>
                 <TrailerNIndicator timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
@@ -96,8 +97,8 @@ function Right({title,description,currentID,timestamp,thumbnail,amount}){
 }
 
 function TrailerNIndicator({timestamp,thumbnail,amount}){
-    return <div className="flex h-fit w-[90%] items-stretch  justify-between">
-                <div className="flex  w-[80%] items-center justify-center pt-4 border-t-[0.06rem]">
+    return <div className="flex h-fit w-[100%] items-stretch  justify-between">
+                <div className="flex  w-[100%] items-center justify-center pt-4 landscape:border-t-[0.06rem]">
                     {/* <div className="w-[50%]" >
                         <img src={thumbnail} className="w-100%" />
                     </div> */}
