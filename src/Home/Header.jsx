@@ -1,8 +1,10 @@
 import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons";
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { categoriez } from "../utils/constants";
+import { useSelector, useDispatch } from 'react-redux'
+import { lightMode,darkMode } from "../features/theme/themeSlice";
+import { themeConstants } from "../utils/constants";
 
 const listOfLinks = [{id:1,name:"MOVIES",link:categoriez.movies},
                      {id:2,name: "TV",link:categoriez.tv},
@@ -126,8 +128,19 @@ function AsearchResult({id,type,text, imgsrc}){
 }
 
 function ThemeControls(){
-    const [toNightMode,settoNightMode] = useState(true)
-    return <div className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center " >
+    const currentTheme = useSelector((state)=> state.themeReducer.value);
+    const dispatch  = useDispatch()
+    const [toNightMode,settoNightMode] = useState(true);
+    function handleClick(){
+        toNightMode ? dispatch(lightMode()):dispatch(darkMode());
+        settoNightMode(init=> !init)
+    }
+
+    useEffect(function(){
+        console.log("the current theme is now ",currentTheme," mode");
+    },[toNightMode])
+
+    return <div onClick={()=>handleClick()} className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center " >
                 <span><p className="text-slate-500">NIGHT MODE </p></span>
                 <span>  <p>{toNightMode?" ON":" OFF"}</p>    </span>
             </div>

@@ -40,3 +40,9 @@ export const majCat = {
     tv:"tv",
     all:"all",
 }
+
+
+export const themeConstants = {
+    LIGHT:"LIGHT",
+    DARK:"DARK"
+} 
