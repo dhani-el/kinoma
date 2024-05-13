@@ -5,7 +5,7 @@ import Movies from "./Movies";
 import Footer from "./Footer";
 import { useState } from "react";
 import { categoriez } from "../utils/constants";
-import Skeleton from 'react-loading-skeleton'
+// import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 
@@ -28,11 +28,10 @@ function Home(){
     }
     return <div className=" min-h-screen bg-black relative w-screen box-border">
                 <MajorTrailer type={majorCategory.name} link = {majorCategory["TRENDING"].link}/>
-                <Header handleClick={handleCategoryClick} current = {majorCategory.link}/>
+                <Header handleClick={handleCategoryClick} current = {majorCategory.name}/>
                 <Categories type={majorCategory.name}  handleClick={handleMinorCategoryClick} current={minorcategory}/>
                 <Movies link={majorCategory[minorcategory].link} type={majorCategory.name}  minorcategory={majorCategory[minorcategory].name}/>
                 <Footer/>
-
             </div>
 }
 
