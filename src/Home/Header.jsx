@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { categoriez } from "../utils/constants";
 import { useSelector, useDispatch } from 'react-redux'
 import { lightMode,darkMode } from "../features/theme/themeSlice";
-import { themeConstants } from "../utils/constants";
 
 const listOfLinks = [{id:1,name:"MOVIES",link:categoriez.movies},
                      {id:2,name: "TV",link:categoriez.tv},

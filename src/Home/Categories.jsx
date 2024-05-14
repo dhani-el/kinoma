@@ -1,6 +1,5 @@
 
 import { majCat,categoriez } from "../utils/constants"
-import { themeConstants } from "../utils/constants";
 
 
 const moviecategorys = [
