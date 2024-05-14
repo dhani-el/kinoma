@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 
 
 function Home(){
+    
     const [minorcategory,setMinorCategory] = useState("TRENDING");
     const [majorCategory,setMajorCategory] = useState(categoriez.movies);
     const [majorCat,setMajorCat] = useState(majorCategory[minorcategory].link);
@@ -31,9 +32,9 @@ function Home(){
         setMinorCategory(init=> "TRENDING")
     }
     return <div className={ ` min-h-screen ${shouldBeDark?"bg-black":"bg-white"} relative w-screen box-border  `}>
-                <MajorTrailer type={majorCategory.name} link = {majorCategory["TRENDING"].link}/>
-                <Header handleClick={handleCategoryClick} current = {majorCategory.name}/>
-                <Categories darktheme={shouldBeDark} type={majorCategory.name}  handleClick={handleMinorCategoryClick} current={minorcategory}/>
+                <MajorTrailer />
+                <Header  current = {majorCategory.name}/>
+                <Categories darktheme={shouldBeDark} type={majorCategory.name}   current={minorcategory}/>
                 <Movies darkmode={shouldBeDark} link={majorCategory[minorcategory].link} type={majorCategory.name}  minorcategory={majorCategory[minorcategory].name}/>
                 <Footer darktheme={shouldBeDark}/>
             </div>

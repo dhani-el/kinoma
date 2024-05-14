@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { categoriez } from "../utils/constants";
 import { useSelector, useDispatch } from 'react-redux'
 import { lightMode,darkMode } from "../features/theme/themeSlice";
+import { useParams } from "react-router-dom";
 
-const listOfLinks = [{id:1,name:"MOVIES",link:categoriez.movies},
-                     {id:2,name: "TV",link:categoriez.tv},
-                     {id:3,name: "ALL",link:categoriez.all},
+const listOfLinks = [{id:1,name:"MOVIES",link:categoriez.movies,Link:"movie"},
+                     {id:2,name: "TV",link:categoriez.tv,Link:"tv"},
+                     {id:3,name: "ALL",link:categoriez.all,Link:"all"},
                     ]
 const listOfSocials = [
                         {id:0, icon:FacebookFilled,link:""},
@@ -41,12 +42,21 @@ function Logo(){
     return <p className="font-bebas landscape:text-4xl text-4xl font-bold hover:cursor-default " >KINOMA</p>
 }
 
-function NavList({list = listOfLinks,handleClick,current}){
+function NavList({list = listOfLinks,handleClick}){
 
+    const current = useParams().category
+    const navigate = useNavigate();
+    function handleClickItem(ject){
+        handleClick(ject)
+        navigate(`/${ject.name}/1`)
+    }
+    function handleNavItemClick(category){
+        navigate(`/${category}/trending/1`)
+    }
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <p onClick={()=> handleClick(aLinksObj.link)} key={aLinksObj.id} className={`${current}font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current ==aLinksObj.link && text-white} `} >{aLinksObj.name}</p>
+                        return <a href={`/${aLinksObj.Link}/trending/1`} key={aLinksObj.id} className={`font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current == aLinksObj.Link && "text-white"} `} >{aLinksObj.name}</a>
                     })
                 }
             </div>

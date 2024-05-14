@@ -13,12 +13,22 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
     const [page,setPage] = useState(1);
     const [mainData, setMainData] = useState();
     const baseUrl = "https://api.themoviedb.org/3/";
+    const params = useParams();
+    const trendingfied = params.category === "movie"?"movies":params.category
     useEffect(function(){
-        fetch(`${baseUrl}${link}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
-        .then(response => response.json())
-        .then(response => {setMainData(init=>response); return response})
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
+        if(params.category){
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${params.page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {setMainData(init=>response); return response})
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+        }else{
+            fetch(`${baseUrl}trending/movie/week?page=1&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {setMainData(init=>response); return response})
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+        }
     },[page,link])
 
     useEffect(function(){
@@ -30,7 +40,7 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
                     {minorcategory  == "COMING SOON" && <StartText/>}
                     {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>
-                <Paginator current={mainData?.page} number={mainData?.total_pages} indicatoDest={setPage}/>
+                <Paginator current={Number(params.page)} number={mainData?.total_pages} indicatoDest={setPage}/>
             </div>
 }
 
