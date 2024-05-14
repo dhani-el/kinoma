@@ -1,11 +1,10 @@
 
-
 import Sidebar from "./sidebar"
 import MainContent from "./Content"
-
 import { useLocation, useParams } from "react-router-dom"
 import { useEffect,useState } from "react"
-
+import { useSelector, useDispatch } from 'react-redux'
+import { themeConstants } from "../utils/constants";
 
 function SingleMovie(){
     const queries  = useParams();
@@ -15,6 +14,9 @@ function SingleMovie(){
     const [director, setDirector] = useState();
     const [writers, setWriters] = useState();
     const [cast,setCast]=useState();
+    const theme = useSelector((state)=>state.themeReducer.value);
+    const shouldBeDark = theme === themeConstants.DARK;
+
     useEffect(function(){
 
             fetch(`${baseUrl}${queries.type}/${queries.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
@@ -65,7 +67,7 @@ function SingleMovie(){
     },[])
     return <div className="w-full min-h-full flex justify-between">
                 {/* <Sidebar/> */}
-                <MainContent data={data} casts={cast} writers={writers} director={director} videoKey={videodata} />
+                <MainContent darktheme={shouldBeDark} data={data} casts={cast} writers={writers} director={director} videoKey={videodata} />
             </div>
 }
 

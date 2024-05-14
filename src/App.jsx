@@ -9,6 +9,22 @@ const route  = createBrowserRouter([
     element:<Home/>
   },
   {
+    path:"/:category/:subcategory/:page",
+    element:<Home/>
+  },
+  {
+    path:"/:category/:subcategory",
+    element:<Home/>
+  },
+  {
+    path:"/:category",
+    element:<Home/>
+  },
+  {
+    path:"/:category/:page",
+    element:<Home/>
+  },
+  {
     path:"/single/:type/:id",
     element:<SingleMovie/>
   }

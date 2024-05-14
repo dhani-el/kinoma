@@ -8,29 +8,39 @@ import { useNavigate,useLocation, useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-function Movies({majorCategory,minorcategory,type,link}){
+function Movies({majorCategory,minorcategory,type,link,darkmode}){
     const resetValue = 1
     const [page,setPage] = useState(1);
     const [mainData, setMainData] = useState();
     const baseUrl = "https://api.themoviedb.org/3/";
+    const params = useParams();
+    const trendingfied = params.category === "movie"?"movies":params.category
     useEffect(function(){
-        fetch(`${baseUrl}${link}?page=${page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
-        .then(response => response.json())
-        .then(response => {setMainData(init=>response); return response})
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
+        if(params.category){
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${params.page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {setMainData(init=>response); return response})
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+        }else{
+            fetch(`${baseUrl}trending/movie/week?page=1&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {setMainData(init=>response); return response})
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+        }
     },[page,link])
 
     useEffect(function(){
         setPage(init=> resetValue)
     },[link])
 
-    return <div className=" w-full">
-                <div className=" w-full p-12 grid grid-cols-5 relative text-white gap-x-8 gap-y-12 justify-center">
+    return <div className=" w-full flex flex-col items-center">
+                <div className={` w-full p-12 grid grid-cols-1 landscape:grid-cols-5 relative ${darkmode?"text-white":"text-black"} gap-x-8 gap-y-12 justify-center`}>
                     {minorcategory  == "COMING SOON" && <StartText/>}
                     {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>
-                <Paginator current={mainData?.page} number={mainData?.total_pages} indicatoDest={setPage}/>
+                <Paginator current={Number(params.page)} number={mainData?.total_pages} indicatoDest={setPage}/>
             </div>
 }
 
