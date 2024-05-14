@@ -78,24 +78,19 @@ function SearchTrigger({type}){
     const apikeyUrl = `&api_key=${import.meta.env.VITE_TMDB_API_KEY}`
     function handleSearchChange(value){ 
         setSearchValue(init=> value);
-        console.log(searchValue);
+       
         // controller.abort('search value has changed');
         clearTimeout(timeoutRef);
-        console.log('timeout of value ',timeoutRef,"has been cleared");
         timeoutRef.current = setTimeout(() => {
-            console.log("inside Timeout ");
             handleFetch(value, controller.signal)
         }, 3000);
     }
 
     function handleFetch(value,signal){
-        console.log("inside HandleFetch");
         fetch(`${baseUrl}${value}${apikeyUrl}`,{signal}).then(function(result){
-            console.log("result has been fetched");
             return result.json();
         }).then(function(result){
             setSearchResult(init=>result);
-            console.log("search res =",result);
         }).catch(function(error){
             console.log(error);
         })
@@ -112,7 +107,6 @@ function SearchTrigger({type}){
 }
 
 function SearchResults({results=[],type}){
-    console.log("the value of results is ",results);
     return <div className="flex flex-col items-end w-full max-h-[50vh] overflow-y-scroll">
                 {
                  results.map(function(oneResult){
@@ -146,7 +140,6 @@ function ThemeControls(){
     }
 
     useEffect(function(){
-        console.log("the current theme is now ",currentTheme," mode");
     },[toNightMode])
 
     return <div onClick={()=>handleClick()} className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center hover:cursor-pointer " >

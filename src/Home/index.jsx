@@ -14,23 +14,10 @@ function Home(){
     
     const [minorcategory,setMinorCategory] = useState("TRENDING");
     const [majorCategory,setMajorCategory] = useState(categoriez.movies);
-    const [majorCat,setMajorCat] = useState(majorCategory[minorcategory].link);
     const theme = useSelector((state)=>state.themeReducer.value);
     const shouldBeDark = theme === themeConstants.DARK;
 
-    function handleMinorCategoryClick(value){
-        console.log("current category is ", value);
-        setMinorCategory(init=> value)
-    }
-    function handleMajorCategoryClick(value){
-        console.log("current category is ", value);
-        setMajorCategory(init=> value)
-    }
-    function handleCategoryClick(value){
-        console.log("current category is ", value);
-        setMajorCategory(init=> value);
-        setMinorCategory(init=> "TRENDING")
-    }
+
     return <div className={ ` min-h-screen ${shouldBeDark?"bg-black":"bg-white"} relative w-screen box-border  `}>
                 <MajorTrailer />
                 <Header  current = {majorCategory.name}/>

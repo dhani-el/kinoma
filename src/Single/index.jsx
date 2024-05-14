@@ -22,7 +22,6 @@ function SingleMovie(){
             fetch(`${baseUrl}${queries.type}/${queries.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
             .then(response => {setData(init=>response); return response})
-            .then(response => console.log(response))
             .catch(err => console.error(err));
 
 
@@ -36,7 +35,6 @@ function SingleMovie(){
                 return (result.name.match("Official Trailer")|| result.name.match("Official Teaser") || result.name.match("Trailer") )  && result.key
             })});
              return response})
-        .then(response => console.log(response))
         .catch(err => console.error(err));
 
     },[])
@@ -46,7 +44,6 @@ function SingleMovie(){
         .then(response => response.json())
         .then(response => {setDirector(init=>{
             return response?.crew?.find(function(result){
-                console.log("dir results :",result);
                 return result.job === "Director"
             })});
              return response})
@@ -61,7 +58,6 @@ function SingleMovie(){
                                 })});
                         
              return response})
-        .then(response => console.log(response))
         .catch(err => console.error(err));
 
     },[])

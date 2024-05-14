@@ -20,7 +20,6 @@ const tvcategorys = [
 // optimze handleClick
 function Categories({type,handleClick,current,darktheme}){
     const params = useParams()
-    console.log("inside categories and the param.category is",params.category);
     return <div className={`relative mt-2 flex w-full overflow-hidden justify-between landscape:justify-start px-4 landscape:px-0 landscape:pl-[30%] landscape:gap-[5%] ${darktheme ?  "text-slate-300":"text-slate-600"}`} >  
                 {(params.category === "movie" || params.category === undefined) && <Movies darktheme={darktheme}   current={params.subcategory} lists={moviecategorys}/>}
                 {params.category === "tv" && <Tv darktheme={darktheme}   current={params.subcategory} lists={tvcategorys}/>}

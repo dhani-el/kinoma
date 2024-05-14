@@ -27,7 +27,6 @@ function Paginator({number, current}){
 // function Indicat0Dest optimization
 function Paginator2({number=[2], current,indicatoDest}){
     const maxPagAmt = 10;
-    console.log("the current page form paginator 2 view is",current);
     function arrayLize(number){
         let ray = []
         for(let i = current -1 ; i< number ; i++){
@@ -37,7 +36,6 @@ function Paginator2({number=[2], current,indicatoDest}){
     }
 
     function handleClick(value){
-        console.log("new info incoming due page is",value);
         indicatoDest(init=>value)
     }
     return <div className=" landscape:px-12 landscape:py-16 flex w-[96%] landscape:w-full landscape:justify-center landscape:gap-[1rem] items-center">

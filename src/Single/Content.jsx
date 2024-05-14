@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 
 function MainContent({darktheme,data,writers,casts,director ,videoKey}){
     const queries  = useParams();
-    console.log("videokey is",videoKey);
     return <div className={`w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll ${darktheme?"bg-black":"bg-white"}`}>
                     <Logo darktheme={darktheme}/>
                     <VideoComponent url={videoKey?.key} />
@@ -55,7 +54,6 @@ function MainInfoComponent({darktheme,type,title,year,pgrating,rating,duration,g
 }
 
 function Genre({genre= []}){
-    console.log("genre:",genre );
     return <div className="flex gap-2 font-normal landscape:justify-start justify-between ">
                 {
                     genre?.slice(0,3).map(function(agenre){

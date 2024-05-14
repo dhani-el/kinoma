@@ -20,7 +20,6 @@ function MajorTrailer(){
         fetch(`https://api.themoviedb.org/3/trending/${params.category || "movie"}/week?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
         .then(response => response.json())
         .then(response => {setMainData(init=>response); return response})
-        .then(response => console.log(response))
         .catch(err => console.error(err));
     },[])
     return <div className="w-full ">
