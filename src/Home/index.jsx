@@ -34,7 +34,7 @@ function Home(){
                 <MajorTrailer type={majorCategory.name} link = {majorCategory["TRENDING"].link}/>
                 <Header handleClick={handleCategoryClick} current = {majorCategory.name}/>
                 <Categories darktheme={shouldBeDark} type={majorCategory.name}  handleClick={handleMinorCategoryClick} current={minorcategory}/>
-                <Movies link={majorCategory[minorcategory].link} type={majorCategory.name}  minorcategory={majorCategory[minorcategory].name}/>
+                <Movies darkmode={shouldBeDark} link={majorCategory[minorcategory].link} type={majorCategory.name}  minorcategory={majorCategory[minorcategory].name}/>
                 <Footer darktheme={shouldBeDark}/>
             </div>
 }
