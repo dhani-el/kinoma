@@ -1,6 +1,5 @@
 
 import Sample from "../Assets/Images/sample.jpg"
-
 import { StarFilled,ScheduleOutlined, MenuOutlined } from "@ant-design/icons"
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
@@ -8,22 +7,22 @@ import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 
-function MainContent({data,writers,casts,director ,videoKey}){
+function MainContent({darktheme,data,writers,casts,director ,videoKey}){
     const queries  = useParams();
     console.log("videokey is",videoKey);
-    return <div className="w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll bg-black">
+    return <div className={`w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll ${darktheme?"bg-black":"bg-white"}`}>
                     <Logo/>
                     <VideoComponent url={videoKey?.key} />
-                     <MainInfoComponent rating={{avg:data?.vote_average,tot:data?.vote_count}} genre={data?.genres} episodes={data?.number_of_episodes}type={queries.type} pgrating={data?.adult} title={ data?.name || data?.title} year={data?.first_air_date || data?.release_date}/>
+                     <MainInfoComponent darktheme={darktheme} rating={{avg:data?.vote_average,tot:data?.vote_count}} genre={data?.genres} episodes={data?.number_of_episodes}type={queries.type} pgrating={data?.adult} title={ data?.name || data?.title} year={data?.first_air_date || data?.release_date}/>
                     <div className="landscape:pl-8  justify-between flex landscape:flex-row flex-col">
-                        <ExtraInfoComponent stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />
+                        <ExtraInfoComponent darktheme={darktheme} stars={casts?.slice(0,11)} number={data?.popularity} writers={writers} overview={data?.overview} director={director?.name}  />
                         <ComplimentaryInfo/>
                     </div>
              </div>
 }
 
-function Logo(){
-    return <p className=" py-2 self-start font-barbaropt text-4xl landscape:text-4xl font-bold hover:cursor-default text-slate-200" >KINOMA</p>
+function Logo({darktheme}){
+    return <p className={` py-2 self-start font-barbaropt text-4xl landscape:text-4xl font-bold hover:cursor-default ${darktheme?"text-slate-200k":"text-slate-950"}`} >KINOMA</p>
 }
 function VideoComponent({url}){
     return <div className=" w-[98%] h-[50vw] landscape:w-[90%] landscape:h-[65vh] rounded-lg ">
@@ -31,8 +30,8 @@ function VideoComponent({url}){
             </div>
 }
 
-function MainInfoComponent({type,title,year,pgrating,rating,duration,genre,episodes}){
-    return <div className="flex landscape:flex-row flex-col text-white w-full justify-between  landscape:px-8 landscape:py-2 font-bold landscape:items-center ">
+function MainInfoComponent({darktheme,type,title,year,pgrating,rating,duration,genre,episodes}){
+    return <div className={`flex landscape:flex-row flex-col ${darktheme?"text-white":"text-black"} w-full justify-between  landscape:px-8 landscape:py-2 font-bold landscape:items-center `}>
                 <div className="flex landscape:flex-row flex-col gap-4 landscape:justify-between landscape:items-center landscape:w-[70%] ">
                     <p className="landscape:text-4xl text-2xl overflow-hidden text-ellipsis whitespace-nowrap">{title || <Skeleton containerClassName="w-full block" baseColor="#202020" highlightColor="#444" />}</p>
                     <div className="flex w-full justify-between landscape:hidden ">
@@ -73,8 +72,8 @@ function Rating({rating}){
     </div>
 }
 
-function ExtraInfoComponent({overview,director,number,writers,stars}){
-    return <div className="w-full landscape:w-[70%] gap-6 pb-6 text-white text-sm font-montserrat font-medium flex flex-col justify-between">
+function ExtraInfoComponent({darktheme,overview,director,number,writers,stars}){
+    return <div className={`w-full landscape:w-[70%] gap-6 pb-6 ${darktheme?"text-white":"text-black"} text-sm font-montserrat font-medium flex flex-col justify-between`}>
                 <p >{overview ||  <Skeleton containerClassName="w-full min-h-[8rem] flex" baseColor="#202020" highlightColor="#444" />}</p>
                 {director ? <p className="">Director: <span className="text-blue-500">{director}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
                 {writers ?<div className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></div> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
