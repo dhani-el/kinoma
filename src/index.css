@@ -17,10 +17,7 @@ body,html,#root{
     font-family: 'monetizer';
     src: url(./Assets/fonts/Monetizer.ttf);
 }
-@font-face {
-    font-family: 'barbaro';
-    src: url(./Assets/fonts/barbaro.ttf);
-}
+
 @font-face {
     font-family: 'barbaropt';
     src: url(./Assets/fonts/barbaropunta.ttf);

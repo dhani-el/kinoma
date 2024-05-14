@@ -85,7 +85,6 @@ function Amovie({realtype,type,id,img,title,status,rating,year}){
     function handleClickNavigation(){
         // if (type ==="all"){
         // navigate(`/single/${type ==="movies" ?"movie":type}/${id}`)
-
         // }
         navigate(`/single/${realtype}/${id}`)
     }
