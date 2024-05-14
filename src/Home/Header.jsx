@@ -139,7 +139,7 @@ function ThemeControls(){
         console.log("the current theme is now ",currentTheme," mode");
     },[toNightMode])
 
-    return <div onClick={()=>handleClick()} className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center " >
+    return <div onClick={()=>handleClick()} className="flex gap-1 font-montserrat font-bold text-[0.6rem] items-center hover:cursor-pointer " >
                 <span><p className="text-slate-500">NIGHT MODE </p></span>
                 <span>  <p>{toNightMode?" ON":" OFF"}</p>    </span>
             </div>

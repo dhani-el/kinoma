@@ -7,11 +7,10 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-import { majCat,categoriez } from "../utils/constants";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useMediaQuery } from 'react-responsive'
+import { useNavigate} from "react-router-dom";
 
 function MajorTrailer({type,link}){
     const [mainData, setMainData] = useState([])
@@ -36,7 +35,7 @@ function Imagee({metaImage,type}){
                 {metaImage ? <Swiper id="sperSlide" className="w-full h-full relative" slidesPerView={1} centeredSlides  modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
 
                               {metaImage?.map(function(singleImage){
-                            return <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage ADimage={`https://image.tmdb.org/t/p/original/${isLandscape?singleImage.poster_path:singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count} title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />  
+                            return <SwiperSlide style={{width:"100%"}} className="w-full h-full flex items-center justify-center"> <AnImage realtype={type} id={singleImage.id} ADimage={`https://image.tmdb.org/t/p/original/${isLandscape?singleImage.poster_path:singleImage.backdrop_path}.jpg`} awards={String(singleImage.vote_average).slice(0,3)} nominations={singleImage.vote_count} title={singleImage.name || singleImage.title} description={singleImage.overview} currentID={singleImage.currentID} timestamp={singleImage.timestamp} thumbnail={`https://image.tmdb.org/t/p/w215/${singleImage.poster_path}.jpg`} amount={singleImage.amount} />  
                             </SwiperSlide> 
                         })
                  }
@@ -45,23 +44,23 @@ function Imagee({metaImage,type}){
             </div>
 }
 
-function AnImage({ADimage,awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
+function AnImage({realtype,id,ADimage,awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
     return <div className="w-screen flex items-center justify-center overflow-hidden h-full">
                         <div className="w-full h-full absolute top-0 left-0 bg-black opacity-55 z-10">
 
                         </div>
                 <img src={ADimage} className="max-w-full h-auto object-contain object-left-top -z-10" />
-                <MetaDetails awards={awards} nominations={nominations} title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
+                <MetaDetails  realtype={realtype} id={id} awards={awards} nominations={nominations} title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
             </div>
 }
 
-function MetaDetails({awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
+function MetaDetails({realtype,id,awards,nominations,title,description,currentID,timestamp,thumbnail,amount}){
     return <div className=" gap-[3rem] landscape:gap-0 flex flex-col-reverse landscape:flex-row justify-between w-[90%] items-center absolute text-white z-50">
         <div className="w-full landscape:w-[15vw] flex items-center justify-center">
             <Left awards={awards} nominations={nominations}/>
         </div>
         <div className="w-full landscape:w-[30vw]">
-            <Right title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
+            <Right realtype={realtype} id={id} title={title} description={description} currentID={currentID} timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
         </div>
     </div>
 }
@@ -83,7 +82,7 @@ function Left({awards,nominations}){
     </div>
 }
 
-function Right({title,description,currentID,timestamp,thumbnail,amount}){
+function Right({title,description,thumbnail,currentID,timestamp,realtype,id}){
     return <div className="w-full flex flex-col gap-6">
                 <div className="w-full landscape:w-[90%] overflow-hidden">
                     <p className="w-full max-h-[6rem] text-2xl landscape:text-5xl overflow-hidden font-bebas text-ellipsis text-wrap break-words  text-center">{title}</p>
@@ -92,12 +91,21 @@ function Right({title,description,currentID,timestamp,thumbnail,amount}){
                 <p className="w-full landscape:w-[90%] self-center landscape:self-start max-h-[6.125rem] text-pretty text-sm overflow-hidden text-ellipsis  font-montserrat font-medium">{description} </p>
                 <p className="w-[90%] text-end">{currentID}</p>
                 </div>
-                <TrailerNIndicator timestamp={timestamp} thumbnail={thumbnail} amount={amount}/>
+                <TrailerNIndicator realtype={realtype} id={id} />
             </div>
 }
 
-function TrailerNIndicator({timestamp,thumbnail,amount}){
-    return <div className="flex h-fit w-[100%] items-stretch  justify-between">
+function TrailerNIndicator({realtype,id,timestamp,thumbnail,amount}){
+
+    const navigate = useNavigate()
+    function handleWatchTrailer(){
+        // if (type ==="all"){
+        // navigate(`/single/${type ==="movies" ?"movie":type}/${id}`)
+
+        // }
+        navigate(`/single/${realtype === "movies"?"movie":realtype}/${id}`)
+    }
+    return <div onClick={handleWatchTrailer} className="flex h-fit w-[100%] items-stretch  justify-between hover:cursor-pointer">
                 <div className="flex  w-[100%] items-center justify-center pt-4 landscape:border-t-[0.06rem]">
                     {/* <div className="w-[50%]" >
                         <img src={thumbnail} className="w-100%" />
