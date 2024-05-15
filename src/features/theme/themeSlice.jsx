@@ -7,7 +7,7 @@ import { themeConstants } from "../../utils/constants";
 
 
 const initialState = {
-    value:themeConstants.DARK,
+    value:themeConstants.LIGHT,
 }
 
 export const themeSlice = createSlice({

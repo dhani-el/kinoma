@@ -10,7 +10,6 @@ export default {
       'montserrat':["montserrat"],
       'monetizer':["monetizer"],
       'bebas':["bebas"],
-      'barbaro':["barbaro"],
       'barbaropt':["barbaropt"],
     }
   },

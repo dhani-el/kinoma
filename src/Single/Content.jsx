@@ -5,13 +5,13 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useEffect, useState } from "react";
 
 
 function MainContent({darktheme,data,writers,casts,director ,videoKey}){
     const queries  = useParams();
-    console.log("videokey is",videoKey);
     return <div className={`w-full flex flex-col gap-7 items-center pt-4 px-8 overflow-y-scroll ${darktheme?"bg-black":"bg-white"}`}>
-                    <Logo/>
+                    <Logo darktheme={darktheme}/>
                     <VideoComponent url={videoKey?.key} />
                      <MainInfoComponent darktheme={darktheme} rating={{avg:data?.vote_average,tot:data?.vote_count}} genre={data?.genres} episodes={data?.number_of_episodes}type={queries.type} pgrating={data?.adult} title={ data?.name || data?.title} year={data?.first_air_date || data?.release_date}/>
                     <div className="landscape:pl-8  justify-between flex landscape:flex-row flex-col">
@@ -22,7 +22,7 @@ function MainContent({darktheme,data,writers,casts,director ,videoKey}){
 }
 
 function Logo({darktheme}){
-    return <p className={` py-2 self-start font-barbaropt text-4xl landscape:text-4xl font-bold hover:cursor-default ${darktheme?"text-slate-200k":"text-slate-950"}`} >KINOMA</p>
+    return <p className={` py-2 self-start font-barbaropt text-4xl landscape:text-4xl font-bold hover:cursor-default ${darktheme?"text-slate-200":"text-slate-950"}`} >KINOMA</p>
 }
 function VideoComponent({url}){
     return <div className=" w-[98%] h-[50vw] landscape:w-[90%] landscape:h-[65vh] rounded-lg ">
@@ -33,8 +33,8 @@ function VideoComponent({url}){
 function MainInfoComponent({darktheme,type,title,year,pgrating,rating,duration,genre,episodes}){
     return <div className={`flex landscape:flex-row flex-col ${darktheme?"text-white":"text-black"} w-full justify-between  landscape:px-8 landscape:py-2 font-bold landscape:items-center `}>
                 <div className="flex landscape:flex-row flex-col gap-4 landscape:justify-between landscape:items-center landscape:w-[70%] ">
-                    <p className="landscape:text-4xl text-2xl overflow-hidden text-ellipsis whitespace-nowrap">{title || <Skeleton containerClassName="w-full block" baseColor="#202020" highlightColor="#444" />}</p>
-                    <div className="flex w-full justify-between landscape:hidden ">
+                    <p className="landscape:text-4xl text-2xl overflow-hidden text-ellipsis whitespace-nowrap landscape:leading-[3rem] ">{title || <Skeleton containerClassName="w-full block" baseColor="#202020" highlightColor="#444" />}</p>
+                    <div className="flex w-full justify-between landscape:hidden overflow-scroll ">
                         <p  className="landscape:hidden">{new Date(year).getFullYear() ||  <Skeleton containerClassName="w-[2rem] block" baseColor="#202020" highlightColor="#444" />}</p>
                         <p className="whitespace-nowrap landscape:hidden">{(pgrating?"PG-18":"PG-13")}</p>
                         <div className="landscape:hidden">{rating.avg ? <Rating rating={rating}/> : <Skeleton containerClassName="w-[6rem] block" baseColor="#202020" highlightColor="#444" />}
@@ -54,7 +54,6 @@ function MainInfoComponent({darktheme,type,title,year,pgrating,rating,duration,g
 }
 
 function Genre({genre= []}){
-    console.log("genre:",genre );
     return <div className="flex gap-2 font-normal landscape:justify-start justify-between ">
                 {
                     genre?.slice(0,3).map(function(agenre){
@@ -103,20 +102,35 @@ function MoreWatch(){
 
 
 function Recommendations({srcs = [Sample,Sample,Sample]}){
+    const queries  = useParams();
+    const baseUrl = "https://api.themoviedb.org/3/";
+    const [recommendations,setRecommendations] = useState()
+
+    useEffect(function(){
+        fetch(`${baseUrl}${queries.type}/${queries.id}/recommendations?api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+        .then(response => response.json())
+        .then(response => {setRecommendations(init=>response);
+            return response})
+        .then(response => console.log("this is the recomendations",response))
+        .catch(err => console.error(err));
+    },[])
     return <div className="w-full relative landscape:mb-0 pb-4">
+        {recommendations &&
                 <div className="grid grid-cols-3 w-full relative gap-x-[0.15rem] ">
-                    <img className=" rounded-tl-md" src={srcs[0]}/>
-                    <img src={srcs[1]}/>
-                    <img className=" rounded-tr-md" src={srcs[2]}/>
-                </div>
+                
+                    <img className=" rounded-tl-md" src={`https://image.tmdb.org/t/p/w500/${recommendations?.results[0]?.poster_path}.jpg`}/>
+                    <img src={`https://image.tmdb.org/t/p/w500/${recommendations?.results[1]?.poster_path}.jpg`}/>
+                    <img className=" rounded-tr-md" src={`https://image.tmdb.org/t/p/w500/${recommendations?.results[2]?.poster_path}.jpg`}/>
+
+                </div>}
                 <div className=" flex text-[0.7rem] p-1 w-full gap-1 items-center rounded-b-md bg-gray-600 text-white absolute"><MenuOutlined/><p>The best Movies and shows this month</p></div>
              </div>
 }
 
-function Accolades({number}){
-    return <div className=" relative flex w-full border-[0.05rem] border-white  rounded-md items-center gap-1">
-                <p className=" border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md">Top Rating #{Math.floor(number)}</p>
-                <p className="text-white">Awards 9 nominations</p>
+function Accolades({number,darktheme}){
+    return <div className={` relative flex w-full border-[0.05rem] ${darktheme?"border-black":"border-white" } rounded-md items-center gap-1`}>
+                <p className={` border-[0.08rem] border-transparent bg-blue-600 p-1 px-4 text-white rounded-md`}>Top Rating #{Math.floor(number)}</p>
+                <p className={`${darktheme?"text-black":"text-white" }`}>Awards 9 nominations</p>
             </div>
 }
 export default MainContent
