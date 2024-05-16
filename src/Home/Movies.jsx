@@ -36,7 +36,7 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
                     {minorcategory  == "COMING SOON" && <StartText/>}
                     {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>
-                <Paginator current={Number(params.page||1)} number={mainData?.total_pages} indicatoDest={setPage}/>
+                <Paginator darktheme={darkmode} current={Number(params.page||1)} number={mainData?.total_pages} indicatoDest={setPage}/>
             </div>
 }
 
