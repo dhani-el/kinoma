@@ -133,7 +133,7 @@ function AsearchResult({id,type,text, imgsrc}){
 function ThemeControls(){
     const currentTheme = useSelector((state)=> state.themeReducer.value);
     const dispatch  = useDispatch()
-    const [toNightMode,settoNightMode] = useState(true);
+    const [toNightMode,settoNightMode] = useState(false);
     function handleClick(){
         toNightMode ? dispatch(lightMode()):dispatch(darkMode());
         settoNightMode(init=> !init)
