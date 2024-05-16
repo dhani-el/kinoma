@@ -1,6 +1,6 @@
 import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons";
 import { useState,useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { categoriez } from "../utils/constants";
 import { useSelector, useDispatch } from 'react-redux'
 import { lightMode,darkMode } from "../features/theme/themeSlice";
@@ -56,7 +56,7 @@ function NavList({list = listOfLinks,handleClick}){
     return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <a href={`/${aLinksObj.Link}/trending/1`} key={aLinksObj.id} className={`font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current == aLinksObj.Link && "text-white"} `} >{aLinksObj.name}</a>
+                        return <Link to={`/${aLinksObj.Link}/trending/1`} key={aLinksObj.id} className={`font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current == aLinksObj.Link && "text-white"} `} >{aLinksObj.name}</Link>
                     })
                 }
             </div>

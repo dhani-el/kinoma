@@ -13,7 +13,6 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
     const [mainData, setMainData] = useState();
     const baseUrl = "https://api.themoviedb.org/3/";
     const params = useParams();
-    const trendingfied = params.category === "movie"?"movies":params.category
     useEffect(function(){
         if(params.category){
             fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${params.page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
@@ -26,7 +25,7 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
         }
-    },[page,link])
+    },[page,params])
 
     useEffect(function(){
         setPage(init=> resetValue)

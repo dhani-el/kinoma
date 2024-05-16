@@ -1,6 +1,6 @@
 
 import { LeftOutlined,RightOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 
 
 
@@ -25,7 +25,7 @@ function Paginator({number, current}){
 }
 
 // function Indicat0Dest optimization
-function Paginator2({number=[2], current,indicatoDest}){
+function Paginator2({number=[2], current=1,indicatoDest}){
     const maxPagAmt = 10;
     function arrayLize(number){
         let ray = []
@@ -69,9 +69,9 @@ function Paginator2({number=[2], current,indicatoDest}){
 function Pag({value,isCurrent,handleClick}){
     const params = useParams();
     const link = params.page?`/${params.category}/${params.subcategory}/${value}`:`/movie/trending/${value}`
-    return <a href={link} key={value} className={`${isCurrent?"bg-black  text-slate-50":"text-black bg-slate-50   hover:bg-slate-300"} flex-1 landscape:flex-initial m-1 landscape:m-0 text-xs landscape:text-sm border-[0.02rem] py-2 landscape:px-4 rounded-sm hover:cursor-default text-center `}>
+    return <Link to={link} key={value} className={`${isCurrent?"bg-black  text-slate-50":"text-black bg-slate-50   hover:bg-slate-300"} flex-1 landscape:flex-initial m-1 landscape:m-0 text-xs landscape:text-sm border-[0.02rem] py-2 landscape:px-4 rounded-sm hover:cursor-default text-center `}>
                 {value}
-             </a>
+             </Link>
 }
 
 
