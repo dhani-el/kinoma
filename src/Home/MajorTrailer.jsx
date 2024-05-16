@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import ADimage from "../Assets/Images/test.jpg";
 import { ArrowLeftOutlined, ArrowRightOutlined, LineOutlined, CaretRightFilled } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from 'swiper/modules';

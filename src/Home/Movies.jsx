@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { StarFilled, HeartFilled } from "@ant-design/icons";
 import Paginator from "./Pagination";
-import { categoriez,majCat } from "../utils/constants";
 import { useNavigate,useLocation, useParams } from "react-router-dom";
 
 
