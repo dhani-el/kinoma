@@ -12,18 +12,7 @@ const route  = createBrowserRouter([
     path:"/:category/:subcategory/:page",
     element:<Home reset={2}/>
   },
-  // {
-  //   path:"/:category/:subcategory",
-  //   element:<Home reset={3}/>
-  // },
-  // {
-  //   path:"/:category",
-  //   element:<Home reset={4}/>
-  // },
-  // {
-  //   path:"/:category/:page",
-  //   element:<Home reset={5}/>
-  // },
+
   {
     path:"/single/:type/:id",
     element:<SingleMovie/>

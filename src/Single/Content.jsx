@@ -76,7 +76,7 @@ function ExtraInfoComponent({darktheme,overview,director,number,writers,stars}){
                 {director ? <p className="">Director: <span className="text-blue-500">{director}</span></p> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
                 {writers ?<div className="flex gap-1">Writer: <span className="text-blue-500 flex gap-1 flex-wrap">{writers?.map(writer=><p>{writer?.name},</p>)}</span></div> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
                 {stars?<div className="flex gap-1">Stars: <span className="text-blue-500 flex gap-1 flex-wrap">{stars?.map(star=><p>{star},</p>)}</span></div> : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
-                {number ? <Accolades number={number} />  : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
+                {number ? <Accolades number={number} darktheme={darktheme} />  : <Skeleton containerClassName="w-full min-h-[2rem] flex" baseColor="#202020" highlightColor="#444" />}
             </div>
 }
 

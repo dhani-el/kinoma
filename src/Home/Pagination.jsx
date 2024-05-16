@@ -25,8 +25,11 @@ function Paginator({number, current}){
 }
 
 // function Indicat0Dest optimization
-function Paginator2({number=[2], current=1,indicatoDest}){
+function Paginator2({darktheme,number=[2], current=1,indicatoDest}){
     const maxPagAmt = 10;
+    const params = useParams()
+    const pluslink = params.page?`/${params.category}/${params.subcategory}/${params.page && params.page<=number[number.length-1]-1?Number(params.page)+1:number[number.length-1]}`:`/movie/trending/${params.page?Number(params.page)+1:2}`
+    const minuslink = params.page?`/${params.category}/${params.subcategory}/${params.page && params.page>=2?params.page-1:1}`:`/movie/trending/${params.page && params.page>=1 ?params.page-1:1}`
     function arrayLize(number){
         let ray = []
         for(let i = current -1 ; i< number ; i++){
@@ -39,27 +42,31 @@ function Paginator2({number=[2], current=1,indicatoDest}){
         indicatoDest(init=>value)
     }
     return <div className=" landscape:px-12 landscape:py-16 flex w-[96%] landscape:w-full landscape:justify-center landscape:gap-[1rem] items-center">
-                <LeftOutlined className="text-white" />
+                <Link to={minuslink}>
+                    <LeftOutlined className={`${darktheme?"text-white":"text-black"}` }/>
+                </Link>
                 {
                    number <= maxPagAmt && arrayLize(number).map(function(a){
                         return <Pag  value={a}  isCurrent={current === a} />
                     })
                 }
-                                {
+                {
                     (number > maxPagAmt && current !== 1) && <Pag  value={1} isCurrent={current === number}/>
                 }
                 {
-                   number > maxPagAmt && arrayLize(7 + current - 1).map(function(a){
+                   number > maxPagAmt && current < number-5 && arrayLize(7 + current - 1).map(function(a){
                         return <Pag  value={a}  isCurrent={current === a} />
                     })
                 }
                 {
-                    number > maxPagAmt && <EllipsisOutlined className="text-white"/>
+                    number > maxPagAmt && <EllipsisOutlined className={`${darktheme?"text-white":"text-black"}` }/>
                 }
                 {
                     number > maxPagAmt && <Pag  value={number} isCurrent={current === number}/>
                 }
-                <RightOutlined className="text-white" />
+                <Link to={pluslink}>
+                 <RightOutlined className={`${darktheme?"text-white":"text-black"}` } />
+                </Link>
 
             </div>
 }
