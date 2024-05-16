@@ -1,5 +1,4 @@
 
-import Sample from "../Assets/Images/sample.jpg"
 import { StarFilled,ScheduleOutlined, MenuOutlined } from "@ant-design/icons"
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
@@ -101,7 +100,7 @@ function MoreWatch(){
 }
 
 
-function Recommendations({srcs = [Sample,Sample,Sample]}){
+function Recommendations(){
     const queries  = useParams();
     const baseUrl = "https://api.themoviedb.org/3/";
     const [recommendations,setRecommendations] = useState()
