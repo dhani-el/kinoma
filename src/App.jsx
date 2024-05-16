@@ -6,24 +6,24 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 const route  = createBrowserRouter([
   {
     path:"/",
-    element:<Home/>
+    element:<Home reset={1}/>
   },
   {
     path:"/:category/:subcategory/:page",
-    element:<Home/>
+    element:<Home reset={2}/>
   },
-  {
-    path:"/:category/:subcategory",
-    element:<Home/>
-  },
-  {
-    path:"/:category",
-    element:<Home/>
-  },
-  {
-    path:"/:category/:page",
-    element:<Home/>
-  },
+  // {
+  //   path:"/:category/:subcategory",
+  //   element:<Home reset={3}/>
+  // },
+  // {
+  //   path:"/:category",
+  //   element:<Home reset={4}/>
+  // },
+  // {
+  //   path:"/:category/:page",
+  //   element:<Home reset={5}/>
+  // },
   {
     path:"/single/:type/:id",
     element:<SingleMovie/>

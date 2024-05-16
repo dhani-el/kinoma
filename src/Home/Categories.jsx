@@ -1,6 +1,6 @@
 
 import { majCat,categoriez } from "../utils/constants"
-import { useParams } from "react-router-dom"
+import { useParams,Link } from "react-router-dom"
 
 const moviecategorys = [
                     {name:"TRENDING",rep:"TRENDING",link:"trending"},
@@ -32,7 +32,7 @@ function Movies({darktheme,lists,current}){
     const baseUrl = `/${params.category || "movie"}/`
     return < >
                { lists.map(function(oneCategory){
-                    return <a href={`${baseUrl}${oneCategory.link}/1`} className={`${String(current).toLowerCase() == String(oneCategory.link).toLowerCase() && ` underline decoration-blue-500 ${darktheme ? "text-white":"text-black"}`} whitespace-nowrap text-nowrap  text-lg font-bebas hover:cursor-default hover:${darktheme?"text-white":"text-slate-950"}`} >{oneCategory.name}</a>
+                    return <Link to={`${baseUrl}${oneCategory.link}/1`} className={`${String(current).toLowerCase() == String(oneCategory.link).toLowerCase() && ` underline decoration-blue-500 ${darktheme ? "text-white":"text-black"}`} whitespace-nowrap text-nowrap  text-lg font-bebas hover:cursor-default hover:${darktheme?"text-white":"text-slate-950"}`} >{oneCategory.name}</Link>
                     })}
         </>
 }
@@ -42,7 +42,7 @@ function Tv({darktheme,lists,current}){
     const baseUrl = `/${params.category || "tv"}/`
     return <>
                { lists.map(function(oneCategory){
-                    return <a href={`${baseUrl}${oneCategory.link}/1`} className={`${String(current).toLowerCase() == String(oneCategory.link).toLowerCase() && `underline decoration-blue-500 ${darktheme ? "text-white":"text-black"}`} text-lg font-bebas hover:cursor-default hover:${darktheme ?  "text-white":"text-slate-950"}`} >{oneCategory.name}</a>
+                    return <Link to={`${baseUrl}${oneCategory.link}/1`} className={`${String(current).toLowerCase() == String(oneCategory.link).toLowerCase() && `underline decoration-blue-500 ${darktheme ? "text-white":"text-black"}`} text-lg font-bebas hover:cursor-default hover:${darktheme ?  "text-white":"text-slate-950"}`} >{oneCategory.name}</Link>
                     })}
         </>
 }

@@ -10,7 +10,7 @@ import { themeConstants } from "../utils/constants";
 import { useSelector } from "react-redux";
 
 
-function Home(){
+function Home({reset}){
     
     const [minorcategory,setMinorCategory] = useState("TRENDING");
     const [majorCategory,setMajorCategory] = useState(categoriez.movies);

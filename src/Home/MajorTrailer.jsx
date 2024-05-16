@@ -20,7 +20,7 @@ function MajorTrailer(){
         .then(response => response.json())
         .then(response => {setMainData(init=>response); return response})
         .catch(err => console.error(err));
-    },[])
+    },[params])
     return <div className="w-full ">
                 {/* <Imagee metaImage={[{image:ADimage,awards:15,nominations:32,title:"LIONSGATE MOVIES",description:"person wey no mind wheni land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?  land Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda similique nihil praesentium rem fuga, soluta ipsa qui magnam tenetur culpa, facere ipsam ut voluptate nobis repudiandae doloribus dolore architecto eaque?",currentID:2,timestamp:"3:40",amount:7,thumbnail:ADimage} */}
                 <Imagee metaImage={mainData.results} />
