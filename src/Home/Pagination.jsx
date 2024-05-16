@@ -25,7 +25,7 @@ function Paginator({number, current}){
 }
 
 // function Indicat0Dest optimization
-function Paginator2({darktheme,number=[1000], current=1,indicatoDest}){
+function Paginator2({darktheme,number=[2], current=1,indicatoDest}){
     const maxPagAmt = 10;
     const params = useParams()
     const pluslink = params.page?`/${params.category}/${params.subcategory}/${params.page && params.page<=number[number.length-1]-1?Number(params.page)+1:number[number.length-1]}`:`/movie/trending/${params.page?Number(params.page)+1:2}`
