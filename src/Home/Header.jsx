@@ -1,4 +1,4 @@
-import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled } from "@ant-design/icons";
+import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled,CloseOutlined } from "@ant-design/icons";
 import { useState,useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { categoriez } from "../utils/constants";
@@ -16,14 +16,17 @@ const listOfSocials = [
                         {id:2, icon:InstagramFilled,link:""},
 ]
 
-function Header({handleClick,current}){
+function Header({handleClick,current,menuToggle}){
+    function handleMenuClick(){
+        menuToggle(init=>true)
+    }
     return <div className=" absolute top-0 px-8 py-6 flex flex-col landscape:flex-row w-full z-10  text-white justify-between">
                 <div className="flex w-full landscape:w-[55%] items-center justify-between">
                     <Logo/>
                     <div className="hidden landscape:block ">
                         <NavList handleClick={handleClick} current = {current}/>
                     </div>
-                    <MenuTrigger/>
+                    <MenuTrigger handleClick={handleMenuClick} />
                 </div>
 
                 <div className="block landscape:flex items-center justify-end gap-6 w-full pt-4 landscape:pt-0 landscape:w-[45%]">
@@ -44,26 +47,30 @@ function Logo(){
 
 function NavList({list = listOfLinks,handleClick}){
 
-    const current = useParams().category
-    const navigate = useNavigate();
-    function handleClickItem(ject){
-        handleClick(ject)
-        navigate(`/${ject.name}/1`)
-    }
-    function handleNavItemClick(category){
-        navigate(`/${category}/trending/1`)
-    }
-    return <div className="flex flex-col landscape:gap-8  landscape:flex-row ">
+    const current = useParams().category;
+
+    return <div className="flex flex-col  gap-16 landscape:items-start items-center landscape:gap-8  landscape:flex-row ">
                 {
                     list.map(function(aLinksObj){
-                        return <Link to={`/${aLinksObj.Link}/trending/1`} key={aLinksObj.id} className={`font-montserrat text-slate-300 font-semibold text-xs hover:cursor-default ${current == aLinksObj.Link && "text-white"} `} >{aLinksObj.name}</Link>
+                        return <Link onClick={handleClick} to={`/${aLinksObj.Link}/trending/1`} key={aLinksObj.id} className={`font-montserrat landscape:text-slate-300 font-semibold landscape:text-xs hover:cursor-default ${current == aLinksObj.Link && "text-slate-400 landscape:text-white"} `} >{aLinksObj.name}</Link>
                     })
                 }
             </div>
 }
 
-function MenuTrigger(){
-    return <div className="landscape:hidden flex items-center ">
+export function MobileMenu({open,handleClose,darktheme}){
+    function handleMenuClose(){
+        handleClose(init=>false)
+    }
+    return <div id="mobileMenu" className={`  gap-40 flex flex-col items-center justify-center text-2xl landscape:hidden ${darktheme?"text-white":"text-black"} w-screen h-screen ${darktheme?"bg-black":"bg-white"}  z-30 absolute top-0 ${open?"left-[0%]":"left-[100%]"}`}>
+                        <CloseOutlined className={` absolute left-[90%] top-10`} onClick={handleMenuClose} />
+                        <NavList handleClick={handleMenuClose}/>
+                        <ThemeControls/>
+    </div>
+}
+
+function MenuTrigger({handleClick}){
+    return <div onClick={handleClick} className="landscape:hidden flex items-center ">
                 <MenuOutlined/>
             </div>
 }
