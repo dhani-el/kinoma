@@ -21,10 +21,10 @@ function MainContent({darktheme,data,writers,casts,director ,videoKey}){
 }
 
 function Logo({darktheme}){
-    return <p className={` py-2 self-start font-barbaropt text-4xl landscape:text-4xl font-bold hover:cursor-default ${darktheme?"text-slate-200":"text-slate-950"}`} >KINOMA</p>
+    return <p className={` py-2 self-start font-bebas text-4xl landscape:text-4xl font-bold hover:cursor-default ${darktheme?"text-slate-200":"text-slate-950"}`} >KINOMA</p>
 }
 function VideoComponent({url}){
-    return <div className=" w-[98%] h-[50vw] landscape:w-[90%] landscape:h-[65vh] rounded-lg ">
+    return <div className=" w-[98%] h-[50vw] mt-6 landscape:w-[90%] landscape:h-[65vh] rounded-lg ">
                     {url ? <ReactPlayer  url={`https://www.youtube.com/watch?v=${url}`} width={"100%"} height={"100%"}  muted = {true} controls={true} light={true}  />:<Skeleton baseColor="#202020" highlightColor="#444" count={1} height={"100%"}/>}
             </div>
 }
@@ -122,7 +122,7 @@ function Recommendations(){
                     <img className=" rounded-tr-md" src={`https://image.tmdb.org/t/p/w500/${recommendations?.results[2]?.poster_path}.jpg`}/>
 
                 </div>}
-                <div className=" flex text-[0.7rem] p-1 w-full gap-1 items-center rounded-b-md bg-gray-600 text-white absolute"><MenuOutlined/><p>The best Movies and shows this month</p></div>
+                <div className=" flex text-[0.7rem] p-1 w-full gap-1 items-center rounded-b-md bg-gray-600 text-white absolute"><MenuOutlined/><p>You might like these</p></div>
              </div>
 }
 
