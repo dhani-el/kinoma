@@ -94,6 +94,9 @@ function SearchTrigger({type}){
     }
 
     function handleFetch(value,signal){
+        if(signal?.aborted){
+            return 
+        }
         fetch(`${baseUrl}${value}${apikeyUrl}`,{signal}).then(function(result){
             return result.json();
         }).then(function(result){
@@ -101,6 +104,7 @@ function SearchTrigger({type}){
         }).catch(function(error){
             console.log(error);
         })
+
     }
     return <div className="relative flex flex-col items-center" >
                 <div className="flex items-center gap-2 landscape:w-fit w-full justify-between ">
