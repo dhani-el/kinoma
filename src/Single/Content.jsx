@@ -56,7 +56,7 @@ function Genre({genre= []}){
     return <div className="flex gap-2 font-normal landscape:justify-start justify-between ">
                 {
                     genre?.slice(0,3).map(function(agenre){
-                        return <p className="p-1 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{agenre.name}</p>
+                        return <p className="p-1 bg-slate-500 border-blue-500 border-[0.06rem] rounded-md flex items-center justify-center text-center">{agenre.name}</p>
                  
                     })
                 }

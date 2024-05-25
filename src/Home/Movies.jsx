@@ -20,7 +20,7 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
         }else{
-            fetch(`${baseUrl}trending/movie/week?page=1&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            fetch(`${baseUrl}trending/movie/week?page=2&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
