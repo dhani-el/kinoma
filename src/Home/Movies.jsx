@@ -15,12 +15,12 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
     const params = useParams();
     useEffect(function(){
         if(params.category){
-            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${params.page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${Number(params.page) + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
         }else{
-            fetch(`${baseUrl}trending/movie/week?page=1&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            fetch(`${baseUrl}trending/movie/week?page=2&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
@@ -89,7 +89,7 @@ function Amovie({realtype,type,id,img,title,status,rating,year}){
     const [imgloaded,setImgLoaded] = useState(false);
     return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
                 {<img src={img} onLoad={()=>setImgLoaded(init=>true)}/> || <Skeleton  baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full min-h-[25vh] flex"/>}
-                <p className="text-nowrap text-ellipsis w-full overflow-hidden whitespace-nowrap font-montserrat font-semibold text-xs text-center ">{title}</p>
+                <p className="text-nowrap text-ellipsis w-full overflow-hidden whitespace-nowrap font-montserrat font-semibold text-sm text-center pt-3 ">{title}</p>
                 <div className="flex w-full justify-between items-center">
                     <p className="font-monetizer text-slate-500">{year}</p>
                     <div className="flex w-[60%] gap-4  items-center justify-end">
