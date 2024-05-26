@@ -15,7 +15,7 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
     const params = useParams();
     useEffect(function(){
         if(params.category){
-            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${params.page}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${Number(params.page) + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
             .then(response => {setMainData(init=>response); return response})
             .catch(err => console.error(err));
