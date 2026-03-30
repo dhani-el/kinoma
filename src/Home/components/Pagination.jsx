@@ -1,5 +1,6 @@
 
 import { LeftOutlined,RightOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 import { useParams,Link } from "react-router-dom";
 
 
@@ -24,6 +25,22 @@ function Paginator({number, current}){
             </div>
 }
 
+function intersectionCallback(number=[2], current=1,indicatoDest){
+    console.log("intersected");
+    const maxPagAmt = 10;
+    const params = useParams()
+    const pluslink = params.page?`/${params.category}/${params.subcategory}/${params.page && params.page<=number[number.length-1]-1?Number(params.page)+1:number[number.length-1]}`:`/movie/trending/${params.page?Number(params.page)+1:2}`
+    const minuslink = params.page?`/${params.category}/${params.subcategory}/${params.page && params.page>=2?params.page-1:1}`:`/movie/trending/${params.page && params.page>=1 ?params.page-1:1}`
+    function arrayLize(number){
+        let ray = []
+        for(let i = current -1 ; i< number ; i++){
+            ray.push(i+1);
+        }
+        return ray
+    }
+
+}
+
 // function Indicat0Dest optimization
 function Paginator2({darktheme,number=[2], current=1,indicatoDest}){
     const maxPagAmt = 10;
@@ -38,9 +55,15 @@ function Paginator2({darktheme,number=[2], current=1,indicatoDest}){
         return ray
     }
 
+    useEffect(()=>{
+        console.log(params);
+        
+    },[])
+
     function handleClick(value){
         indicatoDest(init=>value)
     }
+
     return <div className=" landscape:px-12 landscape:py-16 flex w-[96%] landscape:w-full landscape:justify-center landscape:gap-[1rem] items-center">
                 <Link to={minuslink}>
                     <LeftOutlined className={`${darktheme?"text-white":"text-black"}` }/>
