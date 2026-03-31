@@ -1,9 +1,9 @@
 import { MenuOutlined,SearchOutlined, FacebookFilled, TwitterOutlined, InstagramFilled,CloseOutlined } from "@ant-design/icons";
 import { useState,useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { categoriez } from "../utils/constants";
+import { categoriez } from "../../utils/constants";
 import { useSelector, useDispatch } from 'react-redux'
-import { lightMode,darkMode } from "../features/theme/themeSlice";
+import { lightMode,darkMode } from "../../features/theme/themeSlice";
 import { useParams } from "react-router-dom";
 
 const listOfLinks = [{id:1,name:"MOVIES",link:categoriez.movies,Link:"movie"},

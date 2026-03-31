@@ -1,7 +1,7 @@
 
 import { ArrowRightOutlined, FacebookFilled, TwitterOutlined, InstagramFilled  } from "@ant-design/icons"
 import { useSelector, useDispatch } from 'react-redux'
-import { lightMode,darkMode } from "../features/theme/themeSlice";
+import { lightMode,darkMode } from "../../features/theme/themeSlice";
 
 const listOfSocials = [
     {id:0, icon:FacebookFilled,link:""},

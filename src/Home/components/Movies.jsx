@@ -1,31 +1,85 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StarFilled, HeartFilled } from "@ant-design/icons";
 import Paginator from "./Pagination";
 import { useNavigate,useLocation, useParams } from "react-router-dom";
-
-
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import InfiniteLoadingTrigger from "./infiniteLoadingTrigger";
+
 
 function Movies({majorCategory,minorcategory,type,link,darkmode}){
-    const resetValue = 1
-    const [page,setPage] = useState(1);
-    const [mainData, setMainData] = useState();
+    const resetValue = 2
+    const [page,setPage] = useState(2);
+    const [allData, setAllData] = useState();
+    const [mainData, setMainData] = useState([]);
     const baseUrl = "https://api.themoviedb.org/3/";
     const params = useParams();
-    useEffect(function(){
+    const [isInitialLoad,setIsInitialLoad] = useState(true);
+    const [isLoading,setIsLoading] = useState(false);
+
+    const requestNextSetOfData = useCallback(()=>{
+        if (isInitialLoad) {
+            setIsInitialLoad(false);
+            return
+        }
+
+        if(isLoading) return; 
+
+        console.log("next set of data being called");
+        setIsLoading(()=>true);
+        
         if(params.category){
-            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${Number(params.page) + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=${Number(page) + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
-            .then(response => {setMainData(init=>response); return response})
+            .then(response => {
+                console.log("data being set");
+                setAllData(()=>response);
+                setMainData(prev => {
+                    const combined = [...prev, ...response.results];
+                    const unique = Array.from(
+                        new Map(combined.map(m => [m.id, m])).values()
+                    );
+                    return unique;
+                });
+                setIsLoading(()=>false);
+                setPage(init=>init + 1); return response})
+            .catch(err => {setIsLoading(()=>false);console.error(err)});
+        }else{
+            fetch(`${baseUrl}trending/movie/week?page=${Number(page) + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {
+                console.log("data being set");
+                setAllData(()=>response);
+                setMainData(prev => {
+                    const combined = [...prev, ...response.results];
+                    const unique = Array.from(
+                        new Map(combined.map(m => [m.id, m])).values()
+                    );
+                    return unique;
+                });
+                setIsLoading(()=>false);
+            setPage(init=>init + 1); return response})
+            .catch(err => {setIsLoading(()=>false);console.error(err)});
+        }
+
+    }, [page,isInitialLoad])
+
+    useEffect(function(){
+        console.log("useEffect calling");
+        
+        if(params.category){
+            fetch(`${baseUrl}${params.subcategory ==="trending"?"trending":params.category}/${params.subcategory==="trending"?params.category:params.subcategory}${params.subcategory==="trending"?"/week":""}?page=2&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
+            .then(response => response.json())
+            .then(response => {console.log("data being set");
+             setAllData(()=>response);setMainData(()=>[...response.results]); return response})
             .catch(err => console.error(err));
         }else{
             fetch(`${baseUrl}trending/movie/week?page=2&api_key=${import.meta.env.VITE_TMDB_API_KEY }`)
             .then(response => response.json())
-            .then(response => {setMainData(init=>response); return response})
+            .then(response => {console.log("data being set");setAllData(()=>response);setMainData(()=>[...response.results]); return response})
             .catch(err => console.error(err));
         }
-    },[page,params])
+    },[params.category])
 
     useEffect(function(){
         setPage(init=> resetValue)
@@ -34,9 +88,10 @@ function Movies({majorCategory,minorcategory,type,link,darkmode}){
     return <div className=" w-full flex flex-col items-center">
                 <div className={` w-full p-12 grid grid-cols-1 landscape:grid-cols-5 relative ${darkmode?"text-white":"text-black"} gap-x-8 gap-y-12 justify-center`}>
                     {minorcategory  == "COMING SOON" && <StartText/>}
-                    {mainData ?<Variantii movieData={mainData?.results} type = {type}/>:<MoviesFallback amount={20} />}
+                    {mainData.length > 0 ?<Variantii movieData={mainData} type = {type}/>:<MoviesFallback amount={20} />}
                 </div>
-                <Paginator darktheme={darkmode} current={Number(params.page)||1} number={mainData?.total_pages} indicatoDest={setPage}/>
+                {/* <Paginator darktheme={darkmode} current={Number(params.page)||1} number={mainData?.total_pages} indicatoDest={setPage}/> */}
+                {(mainData.length > 10 && !isLoading) &&<InfiniteLoadingTrigger callback={requestNextSetOfData} />}
             </div>
 }
 
@@ -66,7 +121,7 @@ function Varianti({movieData=[]}){
 function Variantii({movieData=[],type="movie"}){
     return <>
                 {movieData.map(function(singleData){
-                    return <Amovie  realtype={singleData.title? "movie":"tv"} type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={singleData.name || singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ new Date(singleData.first_air_date || singleData.release_date).getFullYear()} />
+                    return <Amovie key={singleData.id} realtype={singleData.title? "movie":"tv"} type={type} id={singleData.id} img={`https://image.tmdb.org/t/p/w500/${singleData.poster_path}.jpg`} title={singleData.name || singleData.title} status={singleData.status} rating={String(singleData.vote_average).slice(0,3)} year={ new Date(singleData.first_air_date || singleData.release_date).getFullYear()} />
                 })}
             </>
 }
@@ -88,7 +143,8 @@ function Amovie({realtype,type,id,img,title,status,rating,year}){
     }
     const [imgloaded,setImgLoaded] = useState(false);
     return <div onClick={()=>{handleClickNavigation()}} className="hover:opacity-70 hover:w-[96%] hover:h-[965] box-border ">
-                {<img src={img} onLoad={()=>setImgLoaded(init=>true)}/> || <Skeleton  baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full min-h-[25vh] flex"/>}
+                <img src={img} onLoad={()=>setImgLoaded(init=>true)}/>  
+                {!imgloaded && <Skeleton  baseColor="#202020" highlightColor="#444" count={1} containerClassName="w-full h-[45vh] flex"/>}
                 <p className="text-nowrap text-ellipsis w-full overflow-hidden whitespace-nowrap font-montserrat font-semibold text-sm text-center pt-3 ">{title}</p>
                 <div className="flex w-full justify-between items-center">
                     <p className="font-monetizer text-slate-500">{year}</p>
@@ -100,6 +156,10 @@ function Amovie({realtype,type,id,img,title,status,rating,year}){
                 </div>
                 <p className=" font-montserrat text-slate-500 text-[0.6rem] font-medium">{status}</p>
             </div>
+}
+
+function AmovieSkeleton(){
+
 }
 
 

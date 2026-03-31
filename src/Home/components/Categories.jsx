@@ -1,5 +1,5 @@
 
-import { majCat,categoriez } from "../utils/constants"
+import { majCat,categoriez } from "../../utils/constants"
 import { useParams,Link } from "react-router-dom"
 
 const moviecategorys = [
